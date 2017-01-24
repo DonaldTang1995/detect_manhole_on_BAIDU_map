@@ -27,12 +27,18 @@ class pascal_voc(imdb):
         self._devkit_path = self._get_default_path() if devkit_path is None \
                             else devkit_path
         self._data_path = os.path.join(self._devkit_path, 'VOC' + self._year)
-        self._classes = ('__background__', # always index 0
+        """self._classes = ('__background__', # always index 0
                          'aeroplane', 'bicycle', 'bird', 'boat',
                          'bottle', 'bus', 'car', 'cat', 'chair',
                          'cow', 'diningtable', 'dog', 'horse',
                          'motorbike', 'person', 'pottedplant',
-                         'sheep', 'sofa', 'train', 'tvmonitor')
+                         'sheep', 'sofa', 'train', 'tvmonitor','n03717622')"""
+
+        self._classes = ('__background__', # always index 0
+                          'bicycle', 'bus', 'car', 'cat', 'dog', 'horse',
+                         'motorbike', 'person', 'pottedplant',
+                         'train', 'n03717622')
+        
         self._class_to_ind = dict(zip(self.classes, xrange(self.num_classes)))
         self._image_ext = '.jpg'
         self._image_index = self._load_image_set_index()
@@ -193,7 +199,15 @@ class pascal_voc(imdb):
             #     print 'Removed {} difficult objects'.format(
             #         len(objs) - len(non_diff_objs))
             objs = non_diff_objs
-        num_objs = len(objs)
+        
+        #num_objs = len(objs)
+        num_objs = 0
+        for ix, obj in enumerate(objs):
+            bbox = obj.find('bndbox')
+            # Make pixel indexes 0-based
+            name=obj.find('name').text.lower().strip()
+            if name in self.classes:
+                num_objs+=1
 
         boxes = np.zeros((num_objs, 4), dtype=np.uint16)
         gt_classes = np.zeros((num_objs), dtype=np.int32)
@@ -202,18 +216,30 @@ class pascal_voc(imdb):
         seg_areas = np.zeros((num_objs), dtype=np.float32)
 
         # Load object bounding boxes into a data frame.
-        for ix, obj in enumerate(objs):
+        ix=0
+        for qws, obj in enumerate(objs):
             bbox = obj.find('bndbox')
             # Make pixel indexes 0-based
+            
+            name=obj.find('name').text.lower().strip()
+            if name not in self.classes:
+                continue
+            cls = self._class_to_ind[name]
+
             x1 = float(bbox.find('xmin').text) - 1
             y1 = float(bbox.find('ymin').text) - 1
             x2 = float(bbox.find('xmax').text) - 1
             y2 = float(bbox.find('ymax').text) - 1
-            cls = self._class_to_ind[obj.find('name').text.lower().strip()]
+            if obj.find('name').text.lower()=='n03717622':
+                x1+=1
+                x2+=1
+                y1+=1
+                y2+=1
             boxes[ix, :] = [x1, y1, x2, y2]
             gt_classes[ix] = cls
             overlaps[ix, cls] = 1.0
             seg_areas[ix] = (x2 - x1 + 1) * (y2 - y1 + 1)
+            ix+=1
 
         overlaps = scipy.sparse.csr_matrix(overlaps)
 

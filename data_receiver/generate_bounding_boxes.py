@@ -1,12 +1,8 @@
 import __init__
-import _init_paths
 from fast_rcnn.config import cfg
 from fast_rcnn.test import im_detect
 from fast_rcnn.nms_wrapper import nms
-from utils.timer import Timer
-import matplotlib.pyplot as plt
 import numpy as np
-import scipy.io as sio
 import caffe, os, sys, cv2
 from write_annotation import generate_image_xml
 
@@ -15,49 +11,15 @@ CLASSES = ('__background__', # always index 0
                  'motorbike', 'person', 'pottedplant',
                  'train', 'manhole_cover')
 
-def detect(img,net_name="resnet50_rfcn_class_12_scales_3",mode='gpu',gpu_id=0):
-
-    manhole_net_path="manhole_net"
-    model_path="final_models"
-    prototxt_path="final_prototxt"
-
-
-    cfg.TEST.HAS_RPN=True
-
-    prototxt_name=net_name+'.prototxt'
-    model_name=net_name+'.caffemodel'
-    prototxt=os.path.join(manhole_net_path,prototxt_path,prototxt_name)
-    model=os.path.join(manhole_net_path,model_path,model_name)
-
-    if not os.path.isfile(model):
-        raise IOError(('Model {:s} not found.\n').format(model))
-
-    if not os.path.isfile(prototxt):
-        raise IOError(('Prototxt {:s} not found.\n').format(prototxt))
-
-    #set mode
-    if mode=="gpu":
-        caffe.set_mode_gpu()
-        caffe.set_device(gpu_id)
-        cfg.GPU_ID = gpu_id
-    elif mode=="cpu":
-        caffe.set_mode_cpu()
-
-    net = caffe.Net(prototxt, model, caffe.TEST)
-
-    print '\n\nLoaded network {:s}'.format(model)
-
-    return im_detect(net, img)
-    
-def detectImageByName(img_name):
+def detectImageByName(net,img_name):
     images_dir='images'
     image_path=os.path.join(images_dir,img_name)
     if not os.path.isfile(image_path):
         raise IOError(('Image {:s} not found.\n').format(model))
     img=cv2.imread(image_path)
-    scores,boxes=detect(img)
+    scores,boxes=detect(net,img)
 
-    CONF_THRESH = 0.8
+    CONF_THRESH = 0.7
     NMS_THRESH = 0.3
 
     bounding_box={}

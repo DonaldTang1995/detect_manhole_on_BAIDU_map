@@ -30,10 +30,10 @@ def detect(img,net_name="resnet50_rfcn_class_12_scales_3",mode='gpu',gpu_id=0):
     model=os.path.join(manhole_net_path,model_path,model_name)
 
     if not os.path.isfile(model):
-        raise IOError(('{:s} not found.\n').format(model))
+        raise IOError(('Model {:s} not found.\n').format(model))
 
     if not os.path.isfile(prototxt):
-        raise IOError(('{:s} not found.\n').format(prototxt))
+        raise IOError(('Prototxt {:s} not found.\n').format(prototxt))
 
     #set mode
     if mode=="gpu":
@@ -52,6 +52,8 @@ def detect(img,net_name="resnet50_rfcn_class_12_scales_3",mode='gpu',gpu_id=0):
 def detectImageByName(img_name):
     images_dir='images'
     image_path=os.path.join(images_dir,img_name)
+    if not os.path.isfile(image_path):
+        raise IOError(('Image {:s} not found.\n').format(model))
     img=cv2.imread(image_path)
     scores,boxes=detect(img)
 
@@ -71,5 +73,3 @@ def detectImageByName(img_name):
 
     generate_image_xml(img_name,img.shape,bounding_box)
 
-
-detectImageByName('31.JPEG')

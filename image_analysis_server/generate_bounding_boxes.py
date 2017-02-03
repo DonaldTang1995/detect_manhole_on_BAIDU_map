@@ -10,7 +10,7 @@ from config import conf
 CLASSES = conf.CLASSES
 
 def detectImageByName(net,img_name,gpu_id=0):
-    images_dir='images'
+    images_dir=conf.IMAGES_DIR
     image_path=os.path.join(images_dir,img_name)
     if not os.path.isfile(image_path):
         raise IOError(('Image {:s} not found.\n').format(model))

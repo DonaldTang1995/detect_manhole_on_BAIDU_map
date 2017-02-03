@@ -20,3 +20,5 @@ __C.SOFTMAX_THRESH=0.7
 #non maximum suppression 
 __C.NMS_THRESH=0.3
 
+#images path
+__C.IMAGES_DIR="images"

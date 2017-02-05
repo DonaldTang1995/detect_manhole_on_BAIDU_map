@@ -22,3 +22,9 @@ __C.NMS_THRESH=0.3
 
 #images path
 __C.IMAGES_DIR="images"
+
+#number of gpus to use
+__C.NUMBER_OF_GPUS=1
+
+#number of thread to download images
+__C.NUMBER_OF_THREADS_TO_DOWNLOAD_IMAGES=10

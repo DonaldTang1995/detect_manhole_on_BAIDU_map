@@ -1,5 +1,5 @@
 import __init__
-import os,caffe,logging
+import os,caffe,logging,sys
 import numpy as np
 from config import conf
 from fast_rcnn.test import im_detect
@@ -18,14 +18,20 @@ def load():
     model=os.path.join(manhole_net_path,model_path,model_name)
 
     if not os.path.isfile(model):
-        logging.error("model "+model_name+" not found")
+        logging.error("model "+model_name+" not found. exit")
+        sys.exit()
 
     if not os.path.isfile(prototxt):
-        logging.error("prototxt "+prototxt+" not found")
+        logging.error("prototxt "+prototxt+" not found. exit")
+        sys.exit()
 
     logging.info("begin loading caffe net")
     net=caffe.Net(prototxt, model, caffe.TEST)
     logging.info("finish loading caffe")
+
+    if net == None:
+        logging.error("can't load caffe net. exit")
+        sys.exit()
 
     if conf.mode=='cpu':
         caffe.set_mode_cpu()

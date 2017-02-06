@@ -1,8 +1,11 @@
 import __init__
-import os
-import caffe
+import os,caffe,logging
+import numpy as np
 from config import conf
+from fast_rcnn.test import im_detect
+
 def load():
+    """preload caffe net"""
     net_name=conf.net_name
 
     manhole_net_path="manhole_net"
@@ -15,10 +18,22 @@ def load():
     model=os.path.join(manhole_net_path,model_path,model_name)
 
     if not os.path.isfile(model):
-        raise IOError(('Model {:s} not found.\n').format(model))
+        logging.error("model "+model_name+" not found")
 
     if not os.path.isfile(prototxt):
-        raise IOError(('Prototxt {:s} not found.\n').format(prototxt))
+        logging.error("prototxt "+prototxt+" not found")
 
+    logging.info("begin loading caffe net")
+    net=caffe.Net(prototxt, model, caffe.TEST)
+    logging.info("finish loading caffe")
 
-    return caffe.Net(prototxt, model, caffe.TEST)
+    if conf.mode=='cpu':
+        caffe.set_mode_cpu()
+    else:
+        caffe.set_mode_gpu()
+
+    im = 128 * np.ones((300, 500, 3), dtype=np.uint8)
+    logging.info("begin processing a dummy image to warm up")
+    im_detect(net,im)
+    logging.info("finish processing a dummy image")
+    return net

@@ -1,7 +1,6 @@
 import xml.dom.minidom as xdm
-import os
+import os,logging
 from xml.dom.minidom import Document
-import os
 
 def xml_node(doc,name,text):
 	node=doc.createElement(name)
@@ -9,6 +8,7 @@ def xml_node(doc,name,text):
 	return node
 
 def generate_bounding_boxes_xml(doc,object_name,xmin,ymin,xmax,ymax,score):
+	"""Create an object node"""
 	object_node=doc.createElement('object')
 
 	#object name
@@ -30,6 +30,8 @@ def generate_bounding_boxes_xml(doc,object_name,xmin,ymin,xmax,ymax,score):
 
 
 def generate_image_xml(image_name,size,bounding_box):
+	"""Generate xml result for image according to bounding box"""
+	logging.info("begin generating xml file")
 	path='annotation'
 	import re
 	#cut off the suffix
@@ -57,6 +59,5 @@ def generate_image_xml(image_name,size,bounding_box):
 			annotation.appendChild(generate_bounding_boxes_xml(doc,name,box[0],box[1],box[2],box[3],box[4]))
 	doc.appendChild(annotation)
 
-
-	with open(xml_name,'w') as f:
-		f.write(doc.toprettyxml(indent=' '))
+	logging.info("finish generating xml file")
+	return doc.toprettyxml(indent=' ')

@@ -1,0 +1,284 @@
+Sun, 05 Feb 2017 18:05:48 server.py[line:13] INFO Starting image analysis server...
+Sun, 05 Feb 2017 18:06:17 server.py[line:13] INFO Starting image analysis server...
+Sun, 05 Feb 2017 18:06:20 detect.py[line:74] INFO Create thread 0 to run image analysis program
+Mon, 06 Feb 2017 10:02:51 server.py[line:13] 140644190508864 INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:04:28 server.py[line:13] 140183727191872 INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:04:30 detect.py[line:74] 140182479169280 INFO Create thread using gpu 0 to run image analysis program
+Mon, 06 Feb 2017 10:14:27 server.py[line:13] [thread:140119502911296] INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:14:35 detect.py[line:74] [thread:140117925725952] INFO Create thread using gpu 0 to run image analysis program
+Mon, 06 Feb 2017 10:16:06 server.py[line:13] [thread:139907027703616] INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:16:11 detect.py[line:74] [thread:139905301726976] INFO Create thread using gpu 0 to run image analysis program
+Mon, 06 Feb 2017 10:40:46 server.py[line:13] [thread:140635391088448] INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:41:02 detect.py[line:76] [thread:140633643669248] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 10:41:02 detect.py[line:53] [thread:140633352148736] INFO image analysis program started
+Mon, 06 Feb 2017 10:41:02 detect.py[line:24] [thread:140632798525184] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:41:02 detect.py[line:56] [thread:140633352148736] INFO image analysis program sleep
+Mon, 06 Feb 2017 10:41:02 detect.py[line:27] [thread:140632798525184] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 10:41:02 detect.py[line:32] [thread:140632798525184] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 10:41:02 detect.py[line:34] [thread:140632798525184] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:41:02 detect.py[line:40] [thread:140632798525184] WARNING Can't download image from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:41:02 detect.py[line:60] [thread:140633352148736] INFO detecting dsawqe.jpg ...
+Mon, 06 Feb 2017 10:42:02 server.py[line:13] [thread:139949837166400] INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:42:06 detect.py[line:76] [thread:139948174849792] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 10:42:06 detect.py[line:53] [thread:139947407304448] INFO image analysis program started
+Mon, 06 Feb 2017 10:42:06 detect.py[line:56] [thread:139947407304448] INFO image analysis program sleep
+Mon, 06 Feb 2017 10:42:06 detect.py[line:24] [thread:139947398911744] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:42:06 detect.py[line:27] [thread:139947398911744] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 10:42:06 detect.py[line:32] [thread:139947398911744] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 10:42:06 detect.py[line:34] [thread:139947398911744] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:42:06 detect.py[line:40] [thread:139947398911744] WARNING Can't download image from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:42:06 detect.py[line:60] [thread:139947407304448] INFO detecting dsawqe.jpg ...
+Mon, 06 Feb 2017 10:42:06 detect.py[line:64] [thread:139947407304448] INFO exit image analysis program
+Mon, 06 Feb 2017 10:44:31 server.py[line:13] [thread:140016854783808] INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:44:32 detect.py[line:74] [thread:140015207163648] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 10:44:32 detect.py[line:51] [thread:140014507775744] INFO image analysis program started
+Mon, 06 Feb 2017 10:44:32 detect.py[line:54] [thread:140014507775744] INFO image analysis program sleep
+Mon, 06 Feb 2017 10:44:32 detect.py[line:24] [thread:140014499383040] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:44:32 detect.py[line:27] [thread:140014499383040] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 10:44:32 detect.py[line:32] [thread:140014499383040] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 10:44:32 detect.py[line:34] [thread:140014499383040] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:44:32 detect.py[line:62] [thread:140014507775744] INFO exit image analysis program
+Mon, 06 Feb 2017 10:47:07 server.py[line:13] [thread:139803394664256] INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:47:09 detect.py[line:74] [thread:139801733867264] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 10:47:09 detect.py[line:53] [thread:139801034479360] INFO image analysis program started
+Mon, 06 Feb 2017 10:47:09 detect.py[line:24] [thread:139801026086656] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:47:09 detect.py[line:27] [thread:139801026086656] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 10:47:09 detect.py[line:32] [thread:139801026086656] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 10:47:09 detect.py[line:34] [thread:139801026086656] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:47:58 server.py[line:13] [thread:140620907198272] INFO Starting image analysis server...
+Mon, 06 Feb 2017 10:48:00 detect.py[line:74] [thread:140619251746560] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 10:48:00 detect.py[line:53] [thread:140618554660608] INFO image analysis program started
+Mon, 06 Feb 2017 10:48:00 detect.py[line:24] [thread:140618546267904] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:48:00 detect.py[line:27] [thread:140618546267904] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 10:48:00 detect.py[line:32] [thread:140618546267904] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 10:48:00 detect.py[line:34] [thread:140618546267904] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 10:48:00 detect.py[line:58] [thread:140618554660608] INFO detecting dsawqe.jpg ...
+Mon, 06 Feb 2017 10:48:00 detect.py[line:62] [thread:140618554660608] INFO exit image analysis program
+Mon, 06 Feb 2017 11:11:39 server.py[line:13] [thread:140531150387008] INFO Starting image analysis server...
+Mon, 06 Feb 2017 11:11:49 detect.py[line:74] [thread:140529423603456] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 11:11:49 detect.py[line:53] [thread:140529132082944] INFO image analysis program started
+Mon, 06 Feb 2017 11:11:49 detect.py[line:24] [thread:140528578459392] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:11:49 detect.py[line:27] [thread:140528578459392] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 11:11:49 detect.py[line:32] [thread:140528578459392] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 11:11:49 detect.py[line:34] [thread:140528578459392] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:11:49 detect.py[line:58] [thread:140529132082944] INFO detecting dsawqe.jpg ...
+Mon, 06 Feb 2017 11:11:49 generate_bounding_boxes.py[line:14] [thread:140529132082944] INFO detection by image name begins
+Mon, 06 Feb 2017 11:11:49 generate_bounding_boxes.py[line:27] [thread:140529132082944] INFO begin analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:30] [thread:140529132082944] INFO finish analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:42] [thread:140529132082944] INFO applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 generate_bounding_boxes.py[line:44] [thread:140529132082944] INFO finish applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:50 detect.py[line:62] [thread:140529132082944] INFO exit image analysis program
+Mon, 06 Feb 2017 11:11:53 detect.py[line:74] [thread:140529415210752] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 11:11:53 detect.py[line:53] [thread:140528578459392] INFO image analysis program started
+Mon, 06 Feb 2017 11:11:53 detect.py[line:24] [thread:140529132082944] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:11:53 detect.py[line:27] [thread:140529132082944] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 11:11:53 detect.py[line:32] [thread:140529132082944] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 11:11:53 detect.py[line:34] [thread:140529132082944] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:11:53 detect.py[line:58] [thread:140528578459392] INFO detecting dsawqe.jpg ...
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:14] [thread:140528578459392] INFO detection by image name begins
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:27] [thread:140528578459392] INFO begin analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:30] [thread:140528578459392] INFO finish analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:42] [thread:140528578459392] INFO applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 generate_bounding_boxes.py[line:44] [thread:140528578459392] INFO finish applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:11:53 detect.py[line:62] [thread:140528578459392] INFO exit image analysis program
+Mon, 06 Feb 2017 11:17:15 server.py[line:13] [thread:139651036817216] INFO Starting image analysis server...
+Mon, 06 Feb 2017 11:17:56 server.py[line:13] [thread:140599787116352] INFO Starting image analysis server...
+Mon, 06 Feb 2017 11:18:38 server.py[line:13] [thread:140308285216576] INFO Starting image analysis server...
+Mon, 06 Feb 2017 11:19:12 server.py[line:13] [thread:139980692428608] INFO Starting image analysis server...
+Mon, 06 Feb 2017 11:23:15 server.py[line:13] [thread:140046607918912] WARNING Starting image analysis server...
+Mon, 06 Feb 2017 11:24:02 server.py[line:13] [thread:140213993035584] WARNING Starting image analysis server...
+Mon, 06 Feb 2017 11:28:08 server.py[line:13] [thread:140335259830080] WARNING Starting image analysis server...
+Mon, 06 Feb 2017 11:29:50 load_net.py[line:26] [thread:139972760332096] INFO begin loading caffe net
+Mon, 06 Feb 2017 11:29:59 load_net.py[line:28] [thread:139972760332096] INFO finish loading caffe
+Mon, 06 Feb 2017 11:29:59 load_net.py[line:36] [thread:139972760332096] WARNING begin processing a dummy image to warm up
+Mon, 06 Feb 2017 11:29:59 load_net.py[line:38] [thread:139972760332096] WARNING finish processing a dummy image
+Mon, 06 Feb 2017 11:29:59 server.py[line:12] [thread:139972760332096] WARNING Starting image analysis server...
+Mon, 06 Feb 2017 11:30:44 load_net.py[line:26] [thread:139733836887872] INFO begin loading caffe net
+Mon, 06 Feb 2017 11:30:49 load_net.py[line:28] [thread:139733836887872] INFO finish loading caffe
+Mon, 06 Feb 2017 11:30:49 load_net.py[line:36] [thread:139733836887872] INFO begin processing a dummy image to warm up
+Mon, 06 Feb 2017 11:30:49 load_net.py[line:38] [thread:139733836887872] INFO finish processing a dummy image
+Mon, 06 Feb 2017 11:30:49 server.py[line:10] [thread:139733836887872] INFO Starting image analysis server...
+Mon, 06 Feb 2017 11:36:24 load_net.py[line:26] [thread:139952314967872] INFO begin loading caffe net
+Mon, 06 Feb 2017 11:36:37 load_net.py[line:28] [thread:139952314967872] INFO finish loading caffe
+Mon, 06 Feb 2017 11:36:37 load_net.py[line:36] [thread:139952314967872] INFO begin processing a dummy image to warm up
+Mon, 06 Feb 2017 11:36:38 load_net.py[line:38] [thread:139952314967872] INFO finish processing a dummy image
+Mon, 06 Feb 2017 11:36:38 server.py[line:10] [thread:139952314967872] INFO Starting image analysis server...
+Mon, 06 Feb 2017 11:36:39 detect.py[line:74] [thread:139950569813760] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 11:36:39 detect.py[line:53] [thread:139950007764736] INFO image analysis program started
+Mon, 06 Feb 2017 11:36:39 detect.py[line:24] [thread:139949999372032] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:36:39 detect.py[line:27] [thread:139949999372032] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 11:36:39 detect.py[line:32] [thread:139949999372032] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 11:36:39 detect.py[line:34] [thread:139949999372032] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:36:39 detect.py[line:58] [thread:139950007764736] INFO detecting dsawqe.jpg ...
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:14] [thread:139950007764736] INFO detection by image name begins
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:27] [thread:139950007764736] INFO begin analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:30] [thread:139950007764736] INFO finish analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:42] [thread:139950007764736] INFO applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 generate_bounding_boxes.py[line:44] [thread:139950007764736] INFO finish applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:36:39 write_annotation.py[line:34] [thread:139950007764736] INFO begin generating xml file
+Mon, 06 Feb 2017 11:36:39 write_annotation.py[line:62] [thread:139950007764736] INFO finish generating xml file
+Mon, 06 Feb 2017 11:36:39 detect.py[line:62] [thread:139950007764736] INFO exit image analysis program
+Mon, 06 Feb 2017 11:38:49 detect.py[line:74] [thread:139950561421056] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 11:38:49 detect.py[line:53] [thread:139949999372032] INFO image analysis program started
+Mon, 06 Feb 2017 11:38:49 detect.py[line:24] [thread:139950007764736] INFO try downloading from http://img0.imgtn.bdimg.com/it/u=3821380348,3141329250&fm=23&gp=0.jpg
+Mon, 06 Feb 2017 11:38:49 detect.py[line:24] [thread:139949990979328] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:38:49 detect.py[line:27] [thread:139949990979328] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 11:38:49 detect.py[line:32] [thread:139949990979328] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 11:38:49 detect.py[line:40] [thread:139950007764736] WARNING Can't download image from http://img0.imgtn.bdimg.com/it/u=3821380348,3141329250&fm=23&gp=0.jpg
+Mon, 06 Feb 2017 11:38:49 detect.py[line:34] [thread:139949990979328] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:38:49 detect.py[line:58] [thread:139949999372032] INFO detecting dsawqe.jpg ...
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:14] [thread:139949999372032] INFO detection by image name begins
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:27] [thread:139949999372032] INFO begin analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:30] [thread:139949999372032] INFO finish analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:38:49 write_annotation.py[line:34] [thread:139949999372032] INFO begin generating xml file
+Mon, 06 Feb 2017 11:38:49 write_annotation.py[line:62] [thread:139949999372032] INFO finish generating xml file
+Mon, 06 Feb 2017 11:38:49 detect.py[line:62] [thread:139949999372032] INFO exit image analysis program
+Mon, 06 Feb 2017 11:40:40 detect.py[line:74] [thread:139950553028352] INFO finish initializing class detect parameters
+Mon, 06 Feb 2017 11:40:40 detect.py[line:53] [thread:139949999372032] INFO image analysis program started
+Mon, 06 Feb 2017 11:40:40 detect.py[line:24] [thread:139949990979328] INFO try downloading from http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:40:40 detect.py[line:24] [thread:139950007764736] INFO try downloading from http://n1.itc.cn/img8/wb/recom/2016/08/03/147021514873965284.JPEG
+Mon, 06 Feb 2017 11:40:40 detect.py[line:27] [thread:139949990979328] INFO http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg exists
+Mon, 06 Feb 2017 11:40:40 detect.py[line:32] [thread:139949990979328] INFO downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg ...
+Mon, 06 Feb 2017 11:40:40 detect.py[line:27] [thread:139950007764736] INFO http://n1.itc.cn/img8/wb/recom/2016/08/03/147021514873965284.JPEG exists
+Mon, 06 Feb 2017 11:40:40 detect.py[line:32] [thread:139950007764736] INFO downloading http://n1.itc.cn/img8/wb/recom/2016/08/03/147021514873965284.JPEG ...
+Mon, 06 Feb 2017 11:40:40 detect.py[line:34] [thread:139949990979328] INFO finish downloading http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg
+Mon, 06 Feb 2017 11:40:40 detect.py[line:58] [thread:139949999372032] INFO detecting dsawqe.jpg ...
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:14] [thread:139949999372032] INFO detection by image name begins
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:27] [thread:139949999372032] INFO begin analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:30] [thread:139949999372032] INFO finish analyzing dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class bicycle in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class bus in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class car in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class cat in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class dog in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class horse in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class motorbike in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class person in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class pottedplant in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class train in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class manhole_cover in dsawqe.jpg
+Mon, 06 Feb 2017 11:40:40 write_annotation.py[line:34] [thread:139949999372032] INFO begin generating xml file
+Mon, 06 Feb 2017 11:40:40 write_annotation.py[line:62] [thread:139949999372032] INFO finish generating xml file
+Mon, 06 Feb 2017 11:40:40 detect.py[line:34] [thread:139950007764736] INFO finish downloading http://n1.itc.cn/img8/wb/recom/2016/08/03/147021514873965284.JPEG
+Mon, 06 Feb 2017 11:40:40 detect.py[line:58] [thread:139949999372032] INFO detecting 1324.jpg ...
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:14] [thread:139949999372032] INFO detection by image name begins
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:27] [thread:139949999372032] INFO begin analyzing 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:30] [thread:139949999372032] INFO finish analyzing 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class bicycle in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class bicycle in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class bus in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class bus in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class car in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class car in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class cat in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class cat in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class dog in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class dog in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class horse in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class horse in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class motorbike in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class motorbike in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class person in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class person in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class pottedplant in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class pottedplant in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class train in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class train in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:42] [thread:139949999372032] INFO applying nms to class manhole_cover in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 generate_bounding_boxes.py[line:44] [thread:139949999372032] INFO finish applying nms to class manhole_cover in 1324.jpg
+Mon, 06 Feb 2017 11:40:40 write_annotation.py[line:34] [thread:139949999372032] INFO begin generating xml file
+Mon, 06 Feb 2017 11:40:40 write_annotation.py[line:62] [thread:139949999372032] INFO finish generating xml file
+Mon, 06 Feb 2017 11:40:40 detect.py[line:62] [thread:139949999372032] INFO exit image analysis program

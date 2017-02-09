@@ -10,3 +10,7 @@ def get_user(token): #not implement
 	"""verify the validity of the token. return a user object in users if it's valid or
 	   or an error if it's not."""
 	return user(token,conf.BAIDU)
+
+def remove_user(token): #not implement
+	"""remove user form users according token, return true if succeeding false if it's not"""
+	pass

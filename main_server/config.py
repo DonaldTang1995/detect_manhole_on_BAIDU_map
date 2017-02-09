@@ -12,3 +12,13 @@ __C.IMAGE_ANALYSIS=3
 #map engine code
 __C.GOOGLE=0
 __C.BAIDU=1
+
+#cache path
+__C.CACHE='cache'
+__C.ANNOTATION='annotation'
+
+#number of image analysis server
+__C.NUMBER_OF_IMAGE_ANALYSIS_SERVER=1
+
+#image analysis server address
+__C.ADDRESSES=['http://tangshitao.51vip.biz:54123/detect/']

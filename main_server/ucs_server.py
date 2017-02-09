@@ -55,4 +55,20 @@ class UCS:
 
             longtitude,latitude=self.data['longtitude'],self.data['latitude']
             return user.search_coordinate(longtitude=longtitude,latitude=latitude)
+        elif commend=="image_analysis":
+            temp=self.check(['limit'])
+            if temp!=None:
+                return temp+ " not found"
+
+            image_number=self.data['limit']
+            return user.image_analysis(image_number)
+        elif commend=="logout":
+            if factory.remove_user(token):
+                return "succeed removing "+token
+            else:
+                return "fail to remove "+token
+        else:
+            return "unknow commend"
+
+            
 

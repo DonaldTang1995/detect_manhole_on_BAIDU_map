@@ -32,7 +32,7 @@ class detect:
             logging.info("downloading "+image_url+" ...")
             urllib.urlretrieve (image_url, saved_path)
             logging.info("finish downloading "+image_url)
-            self.waiting_for_analysis.put(saved_name)
+            self.waiting_for_analysis.put((saved_name,image_url))
 
             self.image_analysis_semaphore.release()
 
@@ -54,9 +54,9 @@ class detect:
         while self.downloading_tried<self.images_number or self.waiting_for_analysis.qsize()!=0:
             self.image_analysis_semaphore.acquire()
             if self.waiting_for_analysis.qsize()!=0:
-                image_name=self.waiting_for_analysis.get()
+                image_name,url=self.waiting_for_analysis.get()
                 logging.info("detecting "+image_name+" ...")
-                self.successfully_detected.put((image_name,detectImageByName(detect.net,image_name,gpu_id)))
+                self.successfully_detected.put((image_name[0:-4],url,detectImageByName(detect.net,image_name,gpu_id)))
 
         self.number_of_gpus_semaphore.release()
         logging.info("exit image analysis program")
@@ -80,7 +80,7 @@ class detect:
             self.number_of_gpus_semaphore.acquire()
             threading.Thread(target=self.run_image_analysis,args=(i,)).start()
 
-        for image_url,md5 in images.items():
+        for md5,image_url in images:
             self.number_of_threads_downloading_images_semaphore.acquire()
             threading.Thread(target=self.download_image,args=(image_url,md5)).start()
 
@@ -91,10 +91,9 @@ class detect:
             self.number_of_threads_downloading_images_semaphore.acquire()
 
 
-        result={}
+        result=[]
         while self.successfully_detected.qsize()!=0:
-            image_name,xml=self.successfully_detected.get()
-            result[image_name]=xml
+            result.append(self.successfully_detected.get())
 
         threading.Thread(target=self.delete_images).start()
         

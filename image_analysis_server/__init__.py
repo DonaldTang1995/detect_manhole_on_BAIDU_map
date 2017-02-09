@@ -7,10 +7,10 @@ def add_path(path):
 
 
 this_dir = osp.dirname(__file__)
-lib_path = osp.join(this_dir, '..', 'py-R-FCN','tools')
+lib_path = osp.join(this_dir, 'py-R-FCN','tools')
 add_path(lib_path)
 
-lib_path = osp.join(this_dir, '..', 'py-R-FCN','lib')
+lib_path = osp.join(this_dir, 'py-R-FCN','lib')
 add_path(lib_path)
 
 logging.config.fileConfig("logging.config")

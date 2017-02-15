@@ -1,8 +1,7 @@
 from config import conf
 from google_map_engine import google_map
 from baidu_map_engine import baidu_map
-from connectDB import save_image_url,get_image_url,save_xml_filename,remove_images
-from connect_image_analysis_server import send_image_urls
+from connectDB import save_image_url,get_image_url,save_xml_filename,remove_images 
 from manage_cache import search_xml_in_cache, save_xml_to_cache
 import json,logging,requests,xml.etree.ElementTree,hashlib,Queue,threading,os
 class user:

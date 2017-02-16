@@ -3,6 +3,7 @@ from google_map_engine import google_map
 from baidu_map_engine import baidu_map
 from connectDB import save_image_url,get_image_url,save_xml_filename,remove_images 
 from manage_cache import search_xml_in_cache, save_xml_to_cache
+from common import check_keys
 import json,logging,requests,xml.etree.ElementTree,hashlib,Queue,threading,os
 class user:
     def __init__(self,token,map_engine):
@@ -10,6 +11,7 @@ class user:
         self.change_map_engine(map_engine)
         self.image_xml=[] #list to put results of image anaylsis
         self.annotation_path=os.path.join(conf.CACHE,conf.ANNOTATION)
+	self.functions={'change_map_engine':self.change_map_engine,'search_by_name':self.search_by_name,'search_bounding_box':self.search_bounding_box,'search_coordinate':self.search_coordinate,'image_analysis':self.image_analysis}
 
     def change_map_engine(self,map_engine):
         if map_engine==conf.GOOGLE:
@@ -25,29 +27,29 @@ class user:
             logging.info("save "+self.token+" : "+url+" to database" )
             save_image_url(self.token,url)
 
-    def search_by_name(self,place_name,center):
+    def search_by_name(self,data):
         """search places by name and center"""
-        logging.info("search "+place_name+" of center: "+center)
+        logging.info('prepare to run search_by_name')
 
         remove_images(self.token)
-        results,image_urls=self.map_engine.search_by_name(place_name,center)
+        results,image_urls=self.map_engine.search_by_name(data)
         self.save_image_urls_to_database(image_urls)
         return json.dumps((results,len(image_urls)))
 
-    def search_bounding_box(self,xmin,ymin,xmax,ymax,place_name):
+    def search_bounding_box(self,data):
         """search places in a boudning box """
-        logging.info("search "+place_name+" in (xmin:%f ymin:%f xmax:%f ymax:%f)"%(xmin,ymin,xmax,ymax))
+        logging.info("prepare to run search_bounding_box")
 
         remove_images(self.token)
-        results,image_urls=self.map_engine.search_bounding_box(xmin,ymin,xmax,ymax,place_name)
+        results,image_urls=self.map_engine.search_bounding_box(data)
         self.save_image_urls_to_database(image_urls)
         return json.dumps((results,len(image_urls)))
 
-    def search_coordinate(self,longtitude,latitude):
+    def search_coordinate(self,data):
         """search place of the coordinate"""
-        logging.info("search (longtitude:%f latitude:%f)"%(longtitude,latitude))
+        logging.info("parpare to run search_coordinate")
 
-        results,image_url=self.map_engine.search_coordinate(longtitude,latitude)
+        results,image_url=self.map_engine.search_coordinate(data)
         self.save_image_urls_to_database([image_url])
         return json.dumps(results)
 
@@ -66,9 +68,14 @@ class user:
             self.image_xml.append((md5,url,xml))
             save_xml_to_cache(md5,xml)
 
-    def image_analysis(self,limit):
+    def image_analysis(self,data):
         """take image url from database and run image analysis"""
         logging.info('run image analysis')
+
+	temp=check_keys(data,'limit')
+	if temp!=None:
+	    return temp+" not found"
+	limit=int(data['limit'])
 
         image_urls=get_image_url(self.token,limit)
         logging.info('generate md5 according to image url')
@@ -91,5 +98,3 @@ class user:
             thread.join()
         logging.info('all results are returned')
 
-
-        return self.image_xml

@@ -13,10 +13,10 @@ class UCS:
 
     def POST(self,name):
         self.data=json.loads(web.data())
-        temp=self.check(['commend'])
+        temp=self.check(['command'])
         if temp!=None:
             return temp+" not found"
-        commend=self.data['commend']
+        commend=self.data['command']
         user=None 
 
         if commend=="login":
@@ -34,41 +34,41 @@ class UCS:
             token=self.data['token']
             user=factory.get_user(token)
 
-        if commend=="search_by_name":
+        if command=="search_by_name":
             temp=self.check(['placename','center'])
             if temp!=None:
                 return temp+ " not found"
 
             center,place_name=self.data['center'],self.data['placename']
             return user.search_by_name(center=center,place_name=place_name)
-        elif commend=="search_bounding_box":
+        elif command=="search_bounding_box":
             temp=self.check(['xmin','ymin','xmax','ymax','placename'])
             if temp!=None:
                 return temp+ " not found"
 
             xmin,ymin,xmax,ymax,place_name=self.data['xmin'],self.data['ymin'],self.data['xmax'],self.data['ymax'],self.data['placename']
             return user.search_bounding_box(xmin=xmin,ymin=ymin,xmax=xmax,ymax=ymax,place_name=place_name)
-        elif commend=="search_coordinate":
+        elif command=="search_coordinate":
             temp=self.check(['longtitude','latitude'])
             if temp!=None:
                 return temp+ " not found"
 
             longtitude,latitude=self.data['longtitude'],self.data['latitude']
             return user.search_coordinate(longtitude=longtitude,latitude=latitude)
-        elif commend=="image_analysis":
+        elif command=="image_analysis":
             temp=self.check(['limit'])
             if temp!=None:
                 return temp+ " not found"
 
             image_number=self.data['limit']
             return user.image_analysis(image_number)
-        elif commend=="logout":
+        elif command=="logout":
             if factory.remove_user(token):
                 return "succeed removing "+token
             else:
                 return "fail to remove "+token
         else:
-            return "unknow commend"
+            return "unknow command"
 
             
 

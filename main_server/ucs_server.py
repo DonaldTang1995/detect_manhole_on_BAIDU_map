@@ -16,10 +16,10 @@ class UCS:
         temp=self.check(['command'])
         if temp!=None:
             return temp+" not found"
-        commend=self.data['command']
+        command=self.data['command']
         user=None 
 
-        if commend=="login":
+        if command=="login":
             temp=self.check(['username','password'])
             if temp!=None:
                 return temp+ "not found"

@@ -7,6 +7,7 @@ urls = (
     '/(.*)', 'UCS'
 )
 if __name__ == "__main__": 
+    web.config.debug=False
     logging.info("UCS starting...")
     app = web.application(urls, globals())
     app.run()

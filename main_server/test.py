@@ -1,6 +1,6 @@
 import requests,json
 host="http://localhost:54231/UCS/"
-response=requests.post(host,data=json.dumps({"password":"dasd","username":"dsadas","command":"gin"})) 
+response=requests.post(host,data=json.dumps({"password":"dasd","username":"dsadas","command":"login"})) 
 
 print response.text 
 

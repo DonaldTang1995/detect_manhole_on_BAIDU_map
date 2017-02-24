@@ -11,7 +11,7 @@ class user:
         self.change_map_engine(map_engine)
         self.image_xml=[] #list to put results of image anaylsis
         self.annotation_path=os.path.join(conf.CACHE,conf.ANNOTATION)
-	self.functions={'change_map_engine':self.change_map_engine,'search_by_name':self.search_by_name,'search_bounding_box':self.search_bounding_box,'search_coordinate':self.search_coordinate,'image_analysis':self.image_analysis}
+        self.functions={'change_map_engine':self.change_map_engine,'search_by_name':self.search_by_name,'search_bounding_box':self.search_bounding_box,'search_coordinate':self.search_coordinate,'image_analysis':self.image_analysis}
 
     def change_map_engine(self,map_engine):
         if map_engine==conf.GOOGLE:
@@ -58,7 +58,7 @@ class user:
         self.image_xml=search_xml_in_cache(images)
 
         for md5,url in images:
-        	logging.info('send '+url+' to '+address)
+            logging.info('send '+url+' to '+address)
 
         response=requests.post(address,data=json.dumps(images))
         logging.info('receive results from '+address)
@@ -72,10 +72,10 @@ class user:
         """take image url from database and run image analysis"""
         logging.info('run image analysis')
 
-	temp=check_keys(data,'limit')
-	if temp!=None:
-	    return temp+" not found"
-	limit=int(data['limit'])
+        temp=check_keys(data,'limit')
+        if temp!=None:
+            return temp+" not found"
+        limit=int(data['limit'])
 
         image_urls=get_image_url(self.token,limit)
         logging.info('generate md5 according to image url')

@@ -9,7 +9,7 @@ class UCS:
     def POST(self,name):
         self.data=json.loads(web.data())
         if 'command' not in self.data:
-	    return 'command not found'
+            return 'command not found'
         
         command=self.data['command']
         user=None 
@@ -25,15 +25,15 @@ class UCS:
             else:
                 return "succeed"
         else:
-	    temp=check_keys(self.data,['token'])
+            temp=check_keys(self.data,['token'])
             if temp!=None:
-		return temp+" not found"
+                return temp+" not found"
 
-	    token=self.data['token']
+            token=self.data['token']
             user=factory.get_user(token)
-	
-	if command in user.functions:
-	    return user.functions[command](self.data)
+    
+        if command in user.functions:
+            return user.functions[command](self.data)
         else:
-	    return "unknown command"    
+            return "unknown command"    
 

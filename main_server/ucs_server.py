@@ -6,14 +6,15 @@ from config import conf
 from common import check_keys
 class UCS:
 
-    def POST(self,name):
+    def POST(self):
         self.data=json.loads(web.data())
+        
         if 'command' not in self.data:
             return 'command not found'
-        
+       
         command=self.data['command']
         user=None 
-
+        
         if command=="login":
             temp=check_keys(self.data,['username','password'])
             if temp!=None:
@@ -21,9 +22,9 @@ class UCS:
             username,password=self.data['username'],self.data['password']
 
             if factory.create_user(username=username,password=password)==None:
-                return "fail"
+                return "fail to login in"
             else:
-                return "succeed"
+                return json.dumps("login in sucessfully")
         else:
             temp=check_keys(self.data,['token'])
             if temp!=None:
@@ -33,7 +34,7 @@ class UCS:
             user=factory.get_user(token)
     
         if command in user.functions:
-            return user.functions[command](self.data)
+            return json.dumps(json.dumps(user.functions[command](self.data)))
         else:
             return "unknown command"    
-
+        

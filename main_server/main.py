@@ -1,10 +1,12 @@
 import web
 import logging
 import __init__
-from ucs_server import UCS
 
+from ucs_server import UCS
+from index import index
 urls = (
-    '/(.*)', 'UCS'
+    '/UCS', 'UCS',
+    '/index','index'
 )
 if __name__ == "__main__": 
     web.config.debug=False

@@ -1,0 +1,447 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Google Map</title>
+        <link rel="stylesheet" href="Map.css" type="text/css"/>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoaOH-XDMVKlm8KJoCXDLR8Twkz0rVkcY"></script>
+    </head>
+    <body onload = "loadMap(52.95478319999999,-1.1581085999999914);">
+        <div id="methods" style="text-align: center;width: 350px;margin-right:auto; margin-left:auto">
+            <form id="form">
+                <label>Please select your searching method: </label>
+                <select name="command" id="select" onchange="showInputTag()">
+                    <option value="search_name">by Name</option>
+                    <option value="search_coord">by Coordinate</option>
+                    <option value="search_box">by Direction</option>
+                </select><br><br>
+                <!-- By Name -->
+                <div id="d1" style="display: block">
+                    <label>Street: </label><br>
+                    <input type="text" name="street" id="street"/><br><br>
+                    <label>City: </label><br>
+                    <input type="text" name="city" id="city"/><br><br>
+                </div>
+                <!-- By Coordinates -->
+                <div id="d2" style="display: none">
+                    <label>Latitude:</label><br>
+                    <input type="number" name="latitude"/><br>
+                    <label>Longitude:</label><br>
+                    <input type="number" name="longitude"/><br><br>
+                </div>
+                <!-- By Bounding Box -->
+                <div id="d3" style="display: none">
+                </div>
+                <!-- End of input -->
+                <input type="button" id ="submit" value="ready" style="display: block; margin-left: auto; margin-right: auto" onclick="ready()"/>
+                <input type="button" id ="confirm" value="confirm" style="display: none; margin-left: auto; margin-right: auto"/>
+            </form>
+        </div>
+        <div style="width:900px; height:450px; padding:10px; margin-right:auto; margin-left:auto">
+            <div id="floating-panel">
+                <form id="addressForm">
+                <label></label>
+                <input class="mapInput" type="text" placeholder="Street" id="street" value="">
+                <label></label>
+                <input class="mapInput" type="text" placeholder="City" id="city" value="">
+                <input class="mapInput" type="button" value="GO!" onclick="loadAddress()"/>
+                </form>
+            </div>
+            <!--<input id="imageButton" class="mapInput" type="button" value="Show" onclick="test()"/>-->
+            <input id="imageButton" class="mapInput" type="button" value="Clear" onclick="removeMarkers()"/>
+            <div id="map_canvas" ></div> <!-- map is here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        </div>
+        <!--
+        <div id="pano" style="margin-top: 30px; margin-left: auto; margin-right: auto"></div>
+        <div id="infomation" style="margin-top: 30px; margin-left: auto; margin-right: auto">
+        
+            <table style="text-align: center; margin-left: auto; margin-right: auto">
+            <tr>
+                <td><b>Position</b></td><td id="position-cell">&nbsp;</td>
+            </tr>
+            <tr>
+                <td><b>POV Heading</b></td><td id="heading-cell">270</td>
+            </tr>
+            <tr>
+                <td><b>POV Pitch</b></td><td id="pitch-cell">0.0</td>
+            </tr>
+            <tr>
+                <td><b>Pano ID</b></td><td id="pano-cell">&nbsp;</td>
+            </tr>
+        </table>
+        -->
+        </div>
+        <button onclick="pick()" style="margin-left: 640px; margin-right: 640px; text-align: center">pick it</button>
+        <button onclick="stop()" style="margin-left: 640px; margin-right: 640px; text-align: center">stop</button>
+        <script language="javascript">
+
+            var selected = "search_name";
+            /*var labels = 'AB';
+            var labelIndex = 0;
+            var coords = [];
+            var curCoord;
+            var det = 0;*/
+            var box = [];
+            var lmarkers = [];
+            var json;
+            var rectangle;
+            var lat_up,lat_down,lng_left,lng_right;
+            var map;
+            //var coorJson = '{"coordinates":[';
+
+            jQuery(document).ready(function(){
+                jQuery("#submit").click(function(){
+                    jQuery.ajax({
+                    type:"POST",
+                    url:"http://cs-linux:32134/UCS",
+                    data:json,
+                    success:function(data){
+                    alert(data);},
+                    error:function(x){console.log(x);alert(x.responseText)},
+                    dataType:'json'
+                    })
+                })
+                jQuery("#confirm").click(function(){
+                    console.log(JSON.stringify({"command":"search_box",'north':lat_up,'south':lat_down,'east':lng_right,'west':lng_left}));
+                    jQuery.ajax({
+                    type:"POST",
+                    url:"http://cs-linux:32134/UCS",
+                    data:JSON.stringify({"command":"search_box","north":lat_up,"south":lat_down,"east":lng_right,"west":lng_left}),
+                    success:function(data){
+                    alert(data);},
+                    error:function(x){console.log(x);alert(x.responseText)},
+                    dataType:'json'
+                    })
+;                })
+            });
+            function larger(a,b){
+                var numa = parseFloat(a);
+                var numb = parseFloat(b);
+                var result = [];
+                if(numa>numb){
+                    result[0] = numa;
+                    result[1] = numb;
+                }else{
+                    result[0] = numb;
+                    result[1] = numa;
+                }
+                return result;
+            }
+
+            function ready(){
+                var json_r;
+                switch(selected){
+                    case "search_name":
+                        loadMap(52.95478319999999,-1.1581085999999914);
+                        var keyword = document.getElementById("d1").getElementsByTagName("input");
+                        var addr = keyword[0].value + ' ' + keyword[1].value;
+                        geocoder.geocode( { 'address': addr}, function(results, status) {
+                            if (status == 'OK') {
+                            map.setCenter(results[0].geometry.location);
+                            } else {
+                            alert('Geocode was not successful for the following reason: ' + status);
+                            }
+                        });
+                        json_r = '{"command":"search_name","street":"'+keyword[0].value+'","city":"'+keyword[1].value+'"}';
+                        json = JSON.parse(json_r);
+                        console.log(json);
+                        break;
+                    case "search_coord":
+                        var cor = document.getElementById("d2").getElementsByTagName("input");
+                        var lat = cor[0].value;
+                        var lng = cor[1].value;
+                        loadMap(lat,lng);
+                        json_r = '{"command":"search_coordinate","latitude":"'+lat+'","longitude":"'+lng+'"}';
+                        json = JSON.parse(json_r);
+                        console.log(json);
+                        break;
+                }
+            }
+
+            function addRectangle(){
+                                var a = box[0].position.lat();
+                                var b = box[0].position.lng();
+                                var c = box[1].position.lat();
+                                var d = box[1].position.lng();
+                                var e = larger(a,c);
+                                var f = larger(b,d);
+                                var bounds = {
+                                    north: e[0],
+                                    south: e[1],
+                                    east: f[0],
+                                    west: f[1]
+                                }
+                                rectangle = new google.maps.Rectangle({
+                                    bounds: bounds,
+                                    editable: true
+                                });
+                                rectangle.addListener('bounds_changed',function(event){
+                                    box[0].setMap(null);
+                                    box[1].setMap(null);
+                                    var ne = rectangle.getBounds().getNorthEast();
+                                    var sw = rectangle.getBounds().getSouthWest();
+                                    lat_up = ne.lat();
+                                    lat_down = sw.lat();
+                                    lng_left = sw.lng();
+                                    lng_right = ne.lng();
+                                });
+                                rectangle.setMap(map);
+                                var ne = rectangle.getBounds().getNorthEast();
+                                var sw = rectangle.getBounds().getSouthWest();
+                                lat_up = ne.lat();
+                                lat_down = sw.lat();
+                                lng_left = sw.lng();
+                                lng_right = ne.lng();
+            }
+
+            function showInputTag(){
+                document.getElementById('confirm').style.display = "none";
+                var inputTag, content, id;
+                document.getElementById("submit").style.display = "none";
+                for(i=1;i<4;i++){
+                    id = "d"+i.toString();
+                    inputTag = document.getElementById(id);
+                    inputTag.style.display = "none";
+                    content = inputTag.getElementsByTagName("input");
+                    for(x=0;x<content.length;x++){
+                        content[x].value = "";
+                    }
+                }
+                var select_tag = document.getElementById("select");
+                selected = select_tag.options[select_tag.selectedIndex].value;
+                switch(selected){
+                    case "search_name":
+                        document.getElementById("d1").style.display = "block";
+                        document.getElementById("submit").style.display = "block";
+                        break;
+                    case "search_coord":
+                        document.getElementById("d2").style.display = "block";
+                        document.getElementById("submit").style.display = "block";
+                        break;
+                    case "search_box":
+                        document.getElementById("d3").style.display = "block";
+                        document.getElementById("submit").style.display = "none";
+                        document.getElementById('confirm').style.display = "block";
+                        //document.getElementById('confirm').style.display = "block";
+                        locationCentre = new google.maps.LatLng(52.95478319999999,-1.1581085999999914);
+                        var mapOptions = {
+                            center: locationCentre,
+                            zoom: 15,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP,
+                            streetViewControl: false
+                        }
+                        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+                        map.addListener('click', function(event) {
+                            if(box.length == 2){
+                                box[0].setMap(null);
+                                box[1].setMap(null);
+                                box.length = 0;
+                                rectangle.setMap(null);
+                            }
+                            var marker = new google.maps.Marker({
+                                position: event.latLng,
+                                map: map
+                            })
+                            box.push(marker);
+                            lmarkers.push(marker);
+                            if(box.length == 2){
+                                addRectangle();
+                            }
+                        });
+                        break;
+                }
+            }
+
+            function loadMap(lat,lng) {
+                geocoder = new google.maps.Geocoder();
+                locationCentre = new google.maps.LatLng(lat,lng);
+                var mapOptions = {
+                    center: locationCentre,
+                    zoom: 15,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    streetViewControl: false
+                }
+                map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+                var directionsService = new google.maps.DirectionsService();
+                var directionsDisplay = new google.maps.DirectionsRenderer({
+                    draggable: true,
+                    map: map
+                });
+                map.addListener('click', function(event) { 
+                    addMarker(event.latLng);
+                });
+            }
+
+            /*function initPano(loc) {
+                var panorama = new google.maps.StreetViewPanorama(
+                    document.getElementById('pano'), {
+                    position: loc,
+                    pov: {
+                        heading: 270,
+                        pitch: 0
+                    },
+                    visible: true
+                });
+
+                panorama.addListener('pano_changed', function() {
+                    var panoCell = document.getElementById('pano-cell');
+                    panoCell.innerHTML = panorama.getPano();
+                });
+
+                panorama.addListener('position_changed', function() {
+                    var positionCell = document.getElementById('position-cell');
+                    positionCell.firstChild.nodeValue = panorama.getPosition() + '';
+                });
+
+                panorama.addListener('pov_changed', function() {
+                    var headingCell = document.getElementById('heading-cell');
+                    var pitchCell = document.getElementById('pitch-cell');
+                    headingCell.firstChild.nodeValue = panorama.getPov().heading + '';
+                    pitchCell.firstChild.nodeValue = panorama.getPov().pitch + '';
+                });
+            }*/
+
+            function removeMarkers() {
+                for (var i = 0; i < lmarkers.length; i++ ) {
+                lmarkers[i].setMap(null);
+                //coords[i] = null;
+                }
+                lmarkers.length = 0;
+                rectangle.setMap(null);
+                //coords.length = 0;
+            }
+
+            function addMarker(latLng) {
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+                lmarkers.push(marker);
+                //curCoord = marker.position;
+                //initPano(curCoord);
+            }
+
+            function loadAddress() {
+                var streetAddress = document.getElementById('street').value;
+                var cityAddress = document.getElementById('city').value;
+                var address =  streetAddress + ' ' + cityAddress;
+                geocoder.geocode( { 'address': address}, function(results, status) {
+                    if (status == 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    
+                    /*
+                    var marker = new google.maps.Marker({
+                        label: labels[labelIndex++ % labels.length],
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                        lmarkers.push(marker);   
+                    */
+                    } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+
+            function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+                directionsService.route({
+                    origin: lmarkers[0].position,
+                    destination: lmarkers[1].position,
+                    travelMode: 'DRIVING'
+                }, function(result, status) {
+                    if (status === 'OK') {
+                    directionsDisplay.setDirections(result);
+                    
+                    //Adds route coordinates to array
+                    pointsArray = result.routes[0].overview_path;
+                    
+                    } else {
+                    window.alert('Directions request failed due to ' + status);
+                    }
+                });
+                removeMarkers_r();
+            }
+
+            function removeMarkers_r() {
+                for (var i = 0; i < lmarkers.length; i++ ) {
+                lmarkers[i].setMap(null);
+                }
+                lmarkers.length = 0;
+            }
+
+            function addMarker_r(latLng) {
+                if(labelIndex > 2) {
+                    labelIndex = 0;
+                }
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    label: labels[labelIndex++ % labels.length],
+                    map: map
+                });
+                lmarkers.push(marker);
+            }
+            /*   
+            function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+                directionsService.route({
+                    origin: lmarkers[0].position,
+                    destination: lmarkers[1].position,
+                    travelMode: 'DRIVING'
+                }, function(result, status) {
+                    if (status === 'OK') {
+                    directionsDisplay.setDirections(result);
+                    
+                    //Adds route coordinates to array
+                    pointsArray = result.routes[0].overview_path;
+                    
+                    } else {
+                    window.alert('Directions request failed due to ' + status);
+                    }
+                });
+                removeMarkers_r();
+            }
+        
+            function loadRoute() {
+                for (var i = 0; i < pointsArray.length; i++ ) {
+                    var lng1 = pointsArray[i].lng();
+                    var lat1 = pointsArray[i].lat();
+                    curCoord = {lat: lat1, lng: lng1};
+                    initPano(curCoord);
+                    alert(curCoord);
+                }
+            }
+        
+            function sleep(numberMillis) { 
+                var now = new Date(); 
+                var exitTime = now.getTime() + numberMillis; 
+                while (true) { 
+                    now = new Date(); 
+                    if (now.getTime() > exitTime) 
+                    return; 
+                } 
+            }
+
+            function stop(){
+                if(selected == "search_dir"){
+                    det = -1;
+                }
+            }
+
+            function pick(){
+                var rawLoc = document.getElementById('position-cell').innerHTML;
+                var modLoc = rawLoc.slice(1,-1);
+                var rawHeading = document.getElementById('heading-cell').innerHTML;
+                var rawPitch = document.getElementById('pitch-cell').innerHTML;
+                var modHeading = Math.round(rawHeading);
+                var modPitch = Math.round(rawPitch);
+                var rawCoorJson = '{"coordinate":'+'"'+modLoc+'"'+','+'"heading":'+'"'+modHeading+'"'+','+'"pitch":'+'"'+modPitch+'"'+'}';
+                var coorJson = JSON.parse(rawCoorJson);
+                console.log(coorJson);
+                if(selected == "search_dir"){
+                    det = 1;
+                }
+            }
+            */
+
+        </script>
+    </body>
+</html>

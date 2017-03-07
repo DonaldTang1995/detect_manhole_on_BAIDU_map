@@ -34,7 +34,9 @@ class user:
         remove_images(self.token)
         results,image_urls=self.map_engine.search_by_name(data)
         self.save_image_urls_to_database(image_urls)
-        return json.dumps((results,len(image_urls)))
+        if len(image_urls)!=0:
+            results=json.dumps((results),len(image_urls))
+        return results
 
     def search_bounding_box(self,data):
         """search places in a boudning box """
@@ -43,7 +45,7 @@ class user:
         remove_images(self.token)
         results,image_urls=self.map_engine.search_bounding_box(data)
         self.save_image_urls_to_database(image_urls)
-        return json.dumps((results,len(image_urls)))
+        return json.jumps(len(image_urls))
 
     def search_coordinate(self,data):
         """search place of the coordinate"""
@@ -51,7 +53,9 @@ class user:
 
         results,image_url=self.map_engine.search_coordinate(data)
         self.save_image_urls_to_database([image_url])
-        return json.dumps(results)
+        if len(image_urls)!=0:
+            results=json.dumps((results),len(image_urls))
+        return results
 
     def send_image_urls(self,address,images):
         """send image url and its md5 to address to run image ananlysis"""
@@ -59,7 +63,6 @@ class user:
 
         for md5,url in images:
             logging.info('send '+url+' to '+address)
-
         response=requests.post(address,data=json.dumps(images))
         logging.info('receive results from '+address)
 
@@ -72,7 +75,7 @@ class user:
         """take image url from database and run image analysis"""
         logging.info('run image analysis')
 
-        temp=check_keys(data,'limit')
+        temp=check_keys(data,['limit'])
         if temp!=None:
             return temp+" not found"
         limit=int(data['limit'])
@@ -97,4 +100,4 @@ class user:
         for thread in thread_pool:
             thread.join()
         logging.info('all results are returned')
-
+        return json.dumps(self.image_xml)

@@ -34,7 +34,7 @@ class UCS:
             user=factory.get_user(token)
     
         if command in user.functions:
-            return json.dumps(json.dumps(user.functions[command](self.data)))
+            return user.functions[command](self.data)
         else:
             return "unknown command"    
         

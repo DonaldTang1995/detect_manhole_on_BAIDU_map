@@ -13,14 +13,14 @@
                 <select name="command" id="select" onchange="showInputTag()">
                     <option value="search_name">by Name</option>
                     <option value="search_coord">by Coordinate</option>
-                    <option value="search_box">by Direction</option>
+                    <option value="search_box">by Bounding Box</option>
                 </select><br><br>
                 <!-- By Name -->
                 <div id="d1" style="display: block">
                     <label>Street: </label><br>
-                    <input type="text" name="street" id="street"/><br><br>
+                    <input type="text" name="street"/><br><br>
                     <label>City: </label><br>
-                    <input type="text" name="city" id="city"/><br><br>
+                    <input type="text" name="city"/><br><br>
                 </div>
                 <!-- By Coordinates -->
                 <div id="d2" style="display: none">
@@ -45,10 +45,10 @@
                 <label></label>
                 <input class="mapInput" type="text" placeholder="City" id="city" value="">
                 <input class="mapInput" type="button" value="GO!" onclick="loadAddress()"/>
+                <input class="mapInput" type="button" value="Clear" onclick="removeMarkers()"/>
                 </form>
             </div>
             <!--<input id="imageButton" class="mapInput" type="button" value="Show" onclick="test()"/>-->
-            <input id="imageButton" class="mapInput" type="button" value="Clear" onclick="removeMarkers()"/>
             <div id="map_canvas" ></div> <!-- map is here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
         </div>
         <!--
@@ -69,10 +69,10 @@
                 <td><b>Pano ID</b></td><td id="pano-cell">&nbsp;</td>
             </tr>
         </table>
-        -->
         </div>
         <button onclick="pick()" style="margin-left: 640px; margin-right: 640px; text-align: center">pick it</button>
         <button onclick="stop()" style="margin-left: 640px; margin-right: 640px; text-align: center">stop</button>
+        -->
         <script language="javascript">
 
             var selected = "search_name";
@@ -91,6 +91,7 @@
 
             jQuery(document).ready(function(){
                 jQuery("#submit").click(function(){
+                    console.log(json);
                     jQuery.ajax({
                     type:"POST",
                     url:"http://cs-linux:32134/UCS",
@@ -144,7 +145,6 @@
                         });
                         json_r = '{"command":"search_name","street":"'+keyword[0].value+'","city":"'+keyword[1].value+'"}';
                         json = JSON.parse(json_r);
-                        console.log(json);
                         break;
                     case "search_coord":
                         var cor = document.getElementById("d2").getElementsByTagName("input");
@@ -342,74 +342,7 @@
                     }
                 });
             }
-
-            function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-                directionsService.route({
-                    origin: lmarkers[0].position,
-                    destination: lmarkers[1].position,
-                    travelMode: 'DRIVING'
-                }, function(result, status) {
-                    if (status === 'OK') {
-                    directionsDisplay.setDirections(result);
-                    
-                    //Adds route coordinates to array
-                    pointsArray = result.routes[0].overview_path;
-                    
-                    } else {
-                    window.alert('Directions request failed due to ' + status);
-                    }
-                });
-                removeMarkers_r();
-            }
-
-            function removeMarkers_r() {
-                for (var i = 0; i < lmarkers.length; i++ ) {
-                lmarkers[i].setMap(null);
-                }
-                lmarkers.length = 0;
-            }
-
-            function addMarker_r(latLng) {
-                if(labelIndex > 2) {
-                    labelIndex = 0;
-                }
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    label: labels[labelIndex++ % labels.length],
-                    map: map
-                });
-                lmarkers.push(marker);
-            }
-            /*   
-            function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-                directionsService.route({
-                    origin: lmarkers[0].position,
-                    destination: lmarkers[1].position,
-                    travelMode: 'DRIVING'
-                }, function(result, status) {
-                    if (status === 'OK') {
-                    directionsDisplay.setDirections(result);
-                    
-                    //Adds route coordinates to array
-                    pointsArray = result.routes[0].overview_path;
-                    
-                    } else {
-                    window.alert('Directions request failed due to ' + status);
-                    }
-                });
-                removeMarkers_r();
-            }
-        
-            function loadRoute() {
-                for (var i = 0; i < pointsArray.length; i++ ) {
-                    var lng1 = pointsArray[i].lng();
-                    var lat1 = pointsArray[i].lat();
-                    curCoord = {lat: lat1, lng: lng1};
-                    initPano(curCoord);
-                    alert(curCoord);
-                }
-            }
-        
+            /*
             function sleep(numberMillis) { 
                 var now = new Date(); 
                 var exitTime = now.getTime() + numberMillis; 

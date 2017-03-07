@@ -16,7 +16,7 @@ class baidu_map(map):
     def search_by_name(self,data): 
         temp=check_keys(data,['placename','max_long','min_long','max_lat','min_lat'])
         if temp!=None:
-            return temp+ " not found"
+            return ({temp+ " not found"},[])
        
         logging.info('begin running search_by_name')    
         placename=data['placename']
@@ -53,7 +53,7 @@ class baidu_map(map):
     def search_bounding_box(self,data):  
         temp=check_keys(data,['max_long','min_long','max_lat','min_lat'])
         if temp!=None:
-            return temp+ " not found"
+            return ({temp+ " not found"},[])
        
         logging.info('begin running search_bounding_box')  
         max_long=data["max_long"]
@@ -93,7 +93,7 @@ class baidu_map(map):
     def search_coordinate(self,data):  
         temp=check_keys(data,['longitude', 'latitude'])
         if temp!=None:
-            return temp+ " not found"
+            return ({temp+ " not found"},[])
 
         logging.info('begin running search_coordinate')
         longitude=data['longitude']

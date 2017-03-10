@@ -23,6 +23,7 @@ class user:
         logging.info("begin putting image urls to database")
 
         remove_images(self.token)
+        print image_urls
         for url in image_urls:
             logging.info("save "+self.token+" : "+url+" to database" )
             save_image_url(self.token,url)
@@ -33,6 +34,7 @@ class user:
 
         remove_images(self.token)
         results,image_urls=self.map_engine.search_by_name(data)
+        print results
         self.save_image_urls_to_database(image_urls)
         if len(image_urls)!=0:
             results=json.dumps((results),len(image_urls))
@@ -45,14 +47,14 @@ class user:
         remove_images(self.token)
         results,image_urls=self.map_engine.search_bounding_box(data)
         self.save_image_urls_to_database(image_urls)
-        return json.jumps(len(image_urls))
+        return json.dumps(len(image_urls))
 
     def search_coordinate(self,data):
         """search place of the coordinate"""
         logging.info("parpare to run search_coordinate")
 
-        results,image_url=self.map_engine.search_coordinate(data)
-        self.save_image_urls_to_database([image_url])
+        results,image_urls=self.map_engine.search_coordinate(data)
+        self.save_image_urls_to_database(image_urls)
         if len(image_urls)!=0:
             results=json.dumps((results),len(image_urls))
         return results
@@ -63,7 +65,7 @@ class user:
 
         for md5,url in images:
             logging.info('send '+url+' to '+address)
-        response=requests.post(address,data=json.dumps(images))
+        response=requests.post(address,data=json.dumps(images),timeout=0.1)
         logging.info('receive results from '+address)
 
         for msg in json.loads(response.text):

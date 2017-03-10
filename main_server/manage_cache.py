@@ -13,8 +13,8 @@ def search_xml_in_cache(images):
         else:
             logging.info(md5+' not found in cache')
 
-    for md5,url,xml in image_xml:
-        images.remove((md5,url))
+    #for md5,url,xml in image_xml:
+    #    images.remove((md5,url))
 
     return image_xml
 

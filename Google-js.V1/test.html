@@ -3,6 +3,7 @@
     <head>
         <title>Google Map</title>
         <link rel="stylesheet" href="Map.css" type="text/css"/>
+        <link rel="stylesheet" href="Main.css" type="text/css"/>
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoaOH-XDMVKlm8KJoCXDLR8Twkz0rVkcY"></script>
     </head>
@@ -14,6 +15,7 @@
                     <option value="search_name">by Name</option>
                     <option value="search_coord">by Coordinate</option>
                     <option value="search_box">by Bounding Box</option>
+                    <!--<option value="search_by_street">by Street</option>-->
                 </select><br><br>
                 <!-- By Name -->
                 <div id="d1" style="display: block">
@@ -51,6 +53,8 @@
             <!--<input id="imageButton" class="mapInput" type="button" value="Show" onclick="test()"/>-->
             <div id="map_canvas" ></div> <!-- map is here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
         </div>
+        <h1 style="text-align: center">image is here</h1><br>
+        <img id="img" alt="Images you selected" src=""/>
         <!--
         <div id="pano" style="margin-top: 30px; margin-left: auto; margin-right: auto"></div>
         <div id="infomation" style="margin-top: 30px; margin-left: auto; margin-right: auto">
@@ -87,6 +91,7 @@
             var rectangle;
             var lat_up,lat_down,lng_left,lng_right;
             var map;
+            var return_value;
             //var coorJson = '{"coordinates":[';
 
             jQuery(document).ready(function(){
@@ -97,24 +102,40 @@
                     url:"http://cs-linux:32134/UCS",
                     data:json,
                     success:function(data){
-                    alert(data);},
+                        alert(data);
+                        var latlng;
+                        //if return an array of coordinates, use below function
+                        /*for(z=1;z<data.length;z++){
+                            latlng = {lat : data[z].latitude, lng : data[z].longitude};
+                            addMarker(latlng);
+                        }*/
+                        latlng = {lat : data.latitude, lng : data.longitude};
+                        addMarker(latlng);
+                    },
                     error:function(x){console.log(x);alert(x.responseText)},
                     dataType:'json'
                     })
                 })
                 jQuery("#confirm").click(function(){
-                    console.log(JSON.stringify({"command":"search_box",'north':lat_up,'south':lat_down,'east':lng_right,'west':lng_left}));
+                    json = JSON.parse('{"command":"search_bounding_box","north":'+lat_up+',"south":'+lat_down+',"east":'+lng_right+',"west":'+lng_left+'}');
+                    console.log(json);
                     jQuery.ajax({
                     type:"POST",
                     url:"http://cs-linux:32134/UCS",
-                    data:JSON.stringify({"command":"search_box","north":lat_up,"south":lat_down,"east":lng_right,"west":lng_left}),
+                    data:json,
                     success:function(data){
-                    alert(data);},
+                    alert(data);
+                    var latlng;
+                    for(z=1;z<data.length;z++){
+                        latlng = {lat : data[z].latitude, lng : data[z].longitude};
+                        addMarker(latlng);
+                    }},
                     error:function(x){console.log(x);alert(x.responseText)},
                     dataType:'json'
                     })
-;                })
+                })
             });
+
             function larger(a,b){
                 var numa = parseFloat(a);
                 var numb = parseFloat(b);
@@ -134,6 +155,7 @@
                 switch(selected){
                     case "search_name":
                         loadMap(52.95478319999999,-1.1581085999999914);
+
                         var keyword = document.getElementById("d1").getElementsByTagName("input");
                         var addr = keyword[0].value + ' ' + keyword[1].value;
                         geocoder.geocode( { 'address': addr}, function(results, status) {
@@ -143,7 +165,7 @@
                             alert('Geocode was not successful for the following reason: ' + status);
                             }
                         });
-                        json_r = '{"command":"search_name","street":"'+keyword[0].value+'","city":"'+keyword[1].value+'"}';
+                        json_r = '{"command":"search_name","address":"'+keyword[0].value+' '+keyword[1].value+'"}';
                         json = JSON.parse(json_r);
                         break;
                     case "search_coord":
@@ -151,9 +173,8 @@
                         var lat = cor[0].value;
                         var lng = cor[1].value;
                         loadMap(lat,lng);
-                        json_r = '{"command":"search_coordinate","latitude":"'+lat+'","longitude":"'+lng+'"}';
+                        json_r = '{"command":"search_coordinate","latitude":'+lat+',"longitude":'+lng+'}';
                         json = JSON.parse(json_r);
-                        console.log(json);
                         break;
                 }
             }
@@ -232,6 +253,8 @@
                         }
                         map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
                         map.addListener('click', function(event) {
+                            var img = document.getElementById('img');
+                            img.src = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+event.latLng.lat()+","+event.latLng.lng()+"&fov=90&heading=235&pitch=10&key=AIzaSyA2VPv8aU7AvTqM2KrpMrs25STB6xanMYg";
                             if(box.length == 2){
                                 box[0].setMap(null);
                                 box[1].setMap(null);
@@ -269,6 +292,8 @@
                 });
                 map.addListener('click', function(event) { 
                     addMarker(event.latLng);
+                    var img = document.getElementById('img');
+                    img.src = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+event.latLng.lat()+","+event.latLng.lng()+"&fov=90&heading=235&pitch=10&key=AIzaSyA2VPv8aU7AvTqM2KrpMrs25STB6xanMYg";
                 });
             }
 

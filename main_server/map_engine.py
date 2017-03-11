@@ -20,3 +20,9 @@ class map:
         """find information of the place and the corresponding street view
            return (dict{place name:information},image url)"""
         pass
+    
+    def search_by_street(self,data):
+        """streetview images of road array
+        return (dict{place name:information},image url)"""
+        pass
+

@@ -5,3 +5,13 @@ def check_keys(data,keys):
 
         return None
 
+def check_float(value,min_value,max_value):
+    try:
+        value=float(value)
+        if value>=min_value and value<=max_value:
+            return value
+        else:
+            return None
+    except ValueError:
+        return None
+        

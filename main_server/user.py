@@ -41,7 +41,7 @@ class user:
     def search_bounding_box(self,data):
         """search places in a boudning box """
         logging.info("prepare to run search_bounding_box")
-        results,image_infos=self.map_engine.search_bounding_box(data)
+        image_infos=self.map_engine.search_bounding_box(data)
         self.save_image_urls_to_database(image_infos)
         self.search_time+=1
         return json.dumps(len(image_infos))

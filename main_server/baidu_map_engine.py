@@ -29,7 +29,6 @@ class baidu_map(map):
 
     # data contains {"name":"...","max_long":"...","min_long":"...","max_lat":"...","min_lat":"..."}
     def search_by_name(self,data): 
-        print 'fuck'
         temp=check_keys(data,['placename','max_long','min_long','max_lat','min_lat'])
         if temp!=None:
             return (temp+ " not found",[])
@@ -111,7 +110,6 @@ class baidu_map(map):
         logging.info('begin running search_coordinate')
         
         url = "http://api.map.baidu.com/geocoder/v2/?&location=%f,%f&output=json&pois=1&ak=%s"%(longitude,latitude,self.key)
-        print url
         temp = urllib2.urlopen(url)
         hjson = json.loads(temp.read())
         address = hjson["result"]["formatted_address"]

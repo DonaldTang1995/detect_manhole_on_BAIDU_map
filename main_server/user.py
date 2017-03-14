@@ -1,7 +1,7 @@
 from config import conf
 from google_map_engine import google_map
 from baidu_map_engine import baidu_map
-from connectDB import save_image_url,get_image_infos,save_xml_filename,remove_image_infos 
+from connectDB import database
 from manage_cache import search_xml_in_cache, save_xml_to_cache
 from common import check_keys
 import json,logging,requests,xml.etree.ElementTree,hashlib,Queue,threading,os
@@ -13,6 +13,7 @@ class user:
         self.search_time=0
         self.annotation_path=os.path.join(conf.CACHE,conf.ANNOTATION)
         self.functions={'change_map_engine':self.change_map_engine,'search_by_name':self.search_by_name,'search_bounding_box':self.search_bounding_box,'search_coordinate':self.search_coordinate,'image_analysis':self.image_analysis}
+        self.db=database.getInstance()
 
     def change_map_engine(self,map_engine):
         if map_engine==conf.GOOGLE:
@@ -25,7 +26,7 @@ class user:
 
         for image in image_infos:
             logging.info("save "+self.token+" : "+image['url']+" to database" )
-            save_image_url(self.token,self.search_time,image['long'],image['lat'],image['url'])
+            self.db.save_image_url(self.token,self.search_time,image['long'],image['lat'],image['url'])
 
     def search_by_name(self,data):
         """search places by name and center"""
@@ -68,12 +69,12 @@ class user:
             logging.info('send '+url+' to '+address)
         if len(images)>0:
             response=requests.post(address,data=json.dumps(images),timeout=0.1)
-        logging.info('receive results from '+address)
+            logging.info('receive results from '+address)
         
-        for msg in json.loads(response.text):
-            md5,url,xml=msg[0],msg[1],msg[2]
-            self.image_xml.append((url,xml))
-            save_xml_to_cache(md5,xml)
+            for msg in json.loads(response.text):
+                md5,url,xml=msg[0],msg[1],msg[2]
+                self.image_xml.append((url,xml))
+                save_xml_to_cache(md5,xml)
 
     def image_analysis(self,data):
         """take image url from database and run image analysis"""
@@ -84,7 +85,7 @@ class user:
             return temp+" not found"
         limit=int(data['limit'])
 
-        image_infos=get_image_infos(self.token,self.seach_time-1,limit)
+        image_infos=self.db.get_image_infos(self.token,self.search_time-1,limit)
         logging.info('generate md5 according to image url')
         images=[]
         md5_to_place={}
@@ -110,5 +111,5 @@ class user:
         for md5,url,xml in self.image_xml:
             longtitude,latitude=md5_to_place[md5]
             results.append({'long':longtitude,'lat':latitude,'url':url,'xml':xml})
-        remove_image_infos(self.token,self.search_time,image_infos)
+        self.db.remove_image_infos(self.token,self.search_time,image_infos)
         return json.dumps(results)

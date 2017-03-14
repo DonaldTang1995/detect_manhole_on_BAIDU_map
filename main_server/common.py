@@ -14,4 +14,7 @@ def check_float(value,min_value,max_value):
             return None
     except ValueError:
         return None
-        
+       
+def coordinate_from_google_to_baidu(longitude,latitude):
+    return longitude,latitude
+     

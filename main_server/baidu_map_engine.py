@@ -1,10 +1,14 @@
 from map_engine import map
-from common import check_keys,check_float
+from config import conf
+from common import check_keys,check_float,coordinate_from_google_to_baidu
 import json, requests, urllib2, httplib,logging
 
 
 class baidu_map(map):
     instance=None
+    def __init__(self):
+        self.key_number=0
+        self.key=conf.BAIDU_KEY[0]
     
     @staticmethod
     def getInstance():
@@ -12,15 +16,20 @@ class baidu_map(map):
             baidu_map.instance=baidu_map()
         return baidu_map.instance
 
-    # data contains {"name":"...","max_long":"...","min_long":"...","max_lat":"...","min_lat":"..."}
+    def get_key():
+        self.key_number=(self.key_number+1)%len(conf.BAIDU_KEY)
+        self.key=conf.BAIDU_KEY[self.key_number]
+    
     def generate_image_urls(self,longitude,latitude):
         urls=[]
         for i in [0,90,180,270]:
-            url="http://api.map.baidu.com/panorama/v2&location=%f,%f&width=1000&height=512&fov=120&pitch=40&heading=%d&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb1"%(longitude,latitude,i)
+            url="http://api.map.baidu.com/panorama/v2&location=%f,%f&width=1000&height=512&fov=120&pitch=40&heading=%d&ak=%s"%(longitude,latitude,i,self.key)
             urls.append({'long':longitude,'lat':latitude,'url':url})
         return urls
-    
+
+    # data contains {"name":"...","max_long":"...","min_long":"...","max_lat":"...","min_lat":"..."}
     def search_by_name(self,data): 
+        print 'fuck'
         temp=check_keys(data,['placename','max_long','min_long','max_lat','min_lat'])
         if temp!=None:
             return (temp+ " not found",[])
@@ -34,8 +43,7 @@ class baidu_map(map):
         max_long,min_long,max_lat,min_lat=values    
         
         #url = "http://api.map.baidu.com/geocoder/v2/"+'?'+"&address="+name+"&output=json&pois=0"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"       
-        url = "http://api.map.baidu.com/place/v2/search?query=%s&bounds=%f,%f,%f,%f&output=json&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"%(placename,min_long,min_lat,max_long,max_lat)
-        print(url)
+        url = "http://api.map.baidu.com/place/v2/search?query=%s&bounds=%f,%f,%f,%f&output=json&ak=%s"%(placename,min_lat,min_long,max_lat,max_long,self.key)
         temp = urllib2.urlopen(url)
         hjson = json.loads(temp.read())
         places=[]
@@ -49,7 +57,7 @@ class baidu_map(map):
 
             
             places=places+[{"name":name,"longitude":longitude,"latitude":latitude,"information":info}]
-            urls=urls+self.generate_image_urls(longtitude,latitude)
+            urls=urls+self.generate_image_urls(longitude,latitude)
 
         return ({placename:places},urls)
 
@@ -79,8 +87,8 @@ class baidu_map(map):
             pattern2=re.compile('[0-9]+.[0-9]+')
             
             for string in pattern1.findall(dom):
-                print string 
                 latitude,longitude=[float(i) for i in pattern2.findall(string)] 
+                longitude,latitude=coordinate_from_google_to_baidu(longitude,latitude)
                 urls=urls+self.generate_image_urls(longitude,latitude)            
         
         except urllib2.HTTPError,e:
@@ -94,12 +102,15 @@ class baidu_map(map):
         temp=check_keys(data,['longitude', 'latitude'])
         if temp!=None:
             return ({temp+ " not found"},[])
+        values=[check_float(data[i],-180,180) for i in ['longitude','latitude']]
+        for v in values:
+            if v==None:
+                return ("invalid value",[])
+        longitude,latitude=values
 
         logging.info('begin running search_coordinate')
-        longitude=data['longitude']
-        latitude=data['latitude']
         
-        url = "http://api.map.baidu.com/geocoder/v2/"+'?'+"&location="+longitude+","+latitude+"&output=json&pois=1"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
+        url = "http://api.map.baidu.com/geocoder/v2/?&location=%f,%f&output=json&pois=1&ak=%s"%(longitude,latitude,self.key)
         print url
         temp = urllib2.urlopen(url)
         hjson = json.loads(temp.read())

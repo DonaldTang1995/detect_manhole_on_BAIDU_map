@@ -27,16 +27,17 @@ class user:
         for image in image_infos:
             logging.info("save "+self.token+" : "+image['url']+" to database" )
             self.db.save_image_url(self.token,self.search_time,image['long'],image['lat'],image['url'])
+        self.search_time+=1
 
     def search_by_name(self,data):
         """search places by name and center"""
         logging.info('prepare to run search_by_name')
 
         results,image_infos=self.map_engine.search_by_name(data)
+        print image_infos
         self.save_image_urls_to_database(image_infos)
         if len(image_infos)!=0:
             results=json.dumps((results),len(image_infos))
-        self.search_time+=1
         return results
 
     def search_bounding_box(self,data):
@@ -44,7 +45,6 @@ class user:
         logging.info("prepare to run search_bounding_box")
         image_infos=self.map_engine.search_bounding_box(data)
         self.save_image_urls_to_database(image_infos)
-        self.search_time+=1
         return json.dumps(len(image_infos))
 
     def search_coordinate(self,data):
@@ -55,7 +55,6 @@ class user:
         self.save_image_urls_to_database(image_urls)
         if len(image_urls)!=0:
             results=json.dumps((results),len(image_urls))
-        self.search_time+=1
         return results
 
     def send_image_urls(self,address,images):
@@ -111,5 +110,5 @@ class user:
         for md5,url,xml in self.image_xml:
             longtitude,latitude=md5_to_place[md5]
             results.append({'long':longtitude,'lat':latitude,'url':url,'xml':xml})
-        self.db.remove_image_infos(self.token,self.search_time,image_infos)
+        self.db.remove_image_infos(self.token,self.search_time-1,image_infos)
         return json.dumps(results)

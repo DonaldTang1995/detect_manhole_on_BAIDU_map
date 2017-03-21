@@ -28,3 +28,11 @@ __C.BAIDU_KEY=['CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb']
 
 #google map key
 __C.GOOGLE_KEY=['AIzaSyAoaOH-XDMVKlm8KJoCXDLR8Twkz0rVkcY']
+
+#database information
+__C.HOST='localhost'
+__C.PORT=3306
+__C.USERNAME='zyGroup'
+__C.PASSWORD='zyGroup'
+__C.DATABASE='db_zyGroup'
+

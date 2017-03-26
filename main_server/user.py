@@ -34,7 +34,6 @@ class user:
         logging.info('prepare to run search_by_name')
 
         results,image_infos=self.map_engine.search_by_name(data)
-        print image_infos
         self.save_image_urls_to_database(image_infos)
         if len(image_infos)!=0:
             results=json.dumps((results),len(image_infos))
@@ -63,7 +62,6 @@ class user:
 
         for md5,url,_ in self.image_xml:
             images.remove((md5,url))
-    
         for md5,url in images:
             logging.info('send '+url+' to '+address)
         if len(images)>0:
@@ -110,5 +108,6 @@ class user:
         for md5,url,xml in self.image_xml:
             longtitude,latitude=md5_to_place[md5]
             results.append({'long':longtitude,'lat':latitude,'url':url,'xml':xml})
+        print results
         self.db.remove_image_infos(self.token,self.search_time-1,image_infos)
         return json.dumps(results)

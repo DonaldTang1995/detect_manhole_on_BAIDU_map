@@ -6,14 +6,16 @@ from manage_cache import search_xml_in_cache, save_xml_to_cache
 from common import check_keys
 import json,logging,requests,xml.etree.ElementTree,hashlib,Queue,threading,os
 class user:
-    def __init__(self,token,map_engine):
+    def __init__(self,token,map_engine,search_time=0,image_xml=[]):
         self.token=token
+        self.map_engine=map_engine
         self.change_map_engine(map_engine)
-        self.image_xml=[] #list to put results of image anaylsis
-        self.search_time=0
+        self.image_xml=image_xml #list to put results of image anaylsis
+        self.search_time=search_time
         self.annotation_path=os.path.join(conf.CACHE,conf.ANNOTATION)
-        self.functions={'change_map_engine':self.change_map_engine,'search_by_name':self.search_by_name,'search_bounding_box':self.search_bounding_box,'search_coordinate':self.search_coordinate,'image_analysis':self.image_analysis}
+        #self.functions={'change_map_engine':self.change_map_engine,'search_by_name':self.search_by_name,'search_bounding_box':self.search_bounding_box,'search_coordinate':self.search_coordinate,'image_analysis':self.image_analysis}
         self.db=database.getInstance()
+
 
     def change_map_engine(self,map_engine):
         if map_engine==conf.GOOGLE:
@@ -44,7 +46,7 @@ class user:
         logging.info("prepare to run search_bounding_box")
         image_infos=self.map_engine.search_bounding_box(data)
         self.save_image_urls_to_database(image_infos)
-        return json.dumps(len(image_infos))
+        return json.dumps(image_infos[0:10])
 
     def search_coordinate(self,data):
         """search place of the coordinate"""

@@ -1,6 +1,6 @@
 from map_engine import map
 from config import conf
-from common import check_keys,check_float,coordinate_from_google_to_baidu
+from common import check_keys,check_float,coordinate_from_google_to_baidu,coordinate_from_baidu_to_google
 import json, requests, urllib2, httplib,logging
 
 
@@ -23,7 +23,7 @@ class baidu_map(map):
     def generate_image_urls(self,longitude,latitude):
         urls=[]
         for i in [0,90,180,270]:
-            url="http://api.map.baidu.com/panorama/v2&location=%f,%f&width=1000&height=512&fov=120&pitch=40&heading=%d&ak=%s"%(longitude,latitude,i,self.key)
+            url="http://api.map.baidu.com/panorama/v2?ak=%s&width=1000&height=512&location=%f,%f&fov=120&pitch=40&heading=%d"%(self.key,longitude,latitude,i)
             urls.append({'long':longitude,'lat':latitude,'url':url})
         return urls
 
@@ -72,7 +72,10 @@ class baidu_map(map):
         for v in values:
             if v==None:
                 return ("invalid value",[])
-        max_long,min_long,max_lat,min_lat=values    
+        max_long_baidu,min_long_baidu,max_lat_baidu,min_lat_baidu=values
+        max_long,max_lat=coordinate_from_baidu_to_google(max_long_baidu,max_lat_baidu)
+        min_long,min_lat=coordinate_from_baidu_to_google(min_long_baidu,min_lat_baidu)    
+        
         url="http://www.openstreetmap.org/api/0.6/map?bbox={},{},{},{}".format(min_long,min_lat,max_long,max_lat)
         #print(url)
         urls=[]
@@ -88,7 +91,8 @@ class baidu_map(map):
             for string in pattern1.findall(dom):
                 latitude,longitude=[float(i) for i in pattern2.findall(string)] 
                 longitude,latitude=coordinate_from_google_to_baidu(longitude,latitude)
-                urls=urls+self.generate_image_urls(longitude,latitude)            
+                if longitude>=min_long_baidu and longitude<=max_long_baidu and latitude>=min_lat_baidu and latitude <min_lat_baidu:
+                    urls=urls+self.generate_image_urls(longitude,latitude)            
         
         except urllib2.HTTPError,e:
             logging.info('This bounding box cannot be found on openstreetmap.org, please try other bounding box.')

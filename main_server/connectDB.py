@@ -12,7 +12,7 @@ class database():
         if database.instance==None:
             database.instance=database()
         return database.instance
-
+    
     def connect(self):
         if self.conn!=None:
             return
@@ -28,7 +28,42 @@ class database():
         except MySQLdb.Error as err:
             print err
             logging.error('{}'.format(err))
-
+    
+    def create_account(self,username,password_md5):
+        self.connect()
+        sql1='SELECT * FROM account WHERE username="{}"'.format(username)
+        sql2='INSERT INTO account VALUES("{}","{}")'.format(username,password_md5)
+   
+        try: 
+            self.curs.execute(sql1)
+            if len(self.curs.fetchall())!=0:
+                return 'username already exists'
+            self.curs.execute(sql2)
+            return "Signup successfully"
+        except MySQLdb.Error,e:
+            try:
+                logging.error("Mysql error [{}]:{}".format(e.args[0],e.args[1]))
+            except IndexError:
+                logging.error("Mysql error {}".format(str(e)))
+            return 'Fail to signup'
+        
+    def authenticate_account(self,username,password_md5):
+        self.connect()
+        sql='SELECT * FROM account WHERE username="{}" and password_md5="{}"'.format(username,password_md5)
+        try:
+            self.curs.execute(sql)
+            if len(self.curs.fetchall())!=0:
+                return True
+            else:
+                return False
+        except MySQLdb.Error,e:
+           try:
+               logging.error("Mysql error [{}]:{}".format(e.args[0],e.args[1]))
+           except IndexError:
+               logging.error("Mysql error {}".format(str(e)))
+           return 'Fail to signup'
+        
+         
     def save_image_url(self,token,time,longitude,latitude,url): #not implement
         self.connect()
         sql='INSERT INTO image_info VALUES("{}",{},{},{},"{}");'.format(token,time,longitude,latitude,url)

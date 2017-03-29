@@ -64,7 +64,6 @@ class baidu_map(map):
     # data contains {"max_long":"...","min_long":"...","max_lat":"...","min_lat":"..."}
     def search_bounding_box(self,data):  
         temp=check_keys(data,['max_long','min_long','max_lat','min_lat'])
-        
         if temp!=None:
             return ({temp+ " not found"},[])
         logging.info('begin running search_bounding_box')  
@@ -91,11 +90,11 @@ class baidu_map(map):
             for string in pattern1.findall(dom):
                 latitude,longitude=[float(i) for i in pattern2.findall(string)] 
                 longitude,latitude=coordinate_from_google_to_baidu(longitude,latitude)
-                if longitude>=min_long_baidu and longitude<=max_long_baidu and latitude>=min_lat_baidu and latitude <min_lat_baidu:
+                if longitude>=min_long_baidu and longitude<=max_long_baidu and latitude>=min_lat_baidu and latitude <=max_lat_baidu:
                     urls=urls+self.generate_image_urls(longitude,latitude)            
-        
         except urllib2.HTTPError,e:
             logging.info('This bounding box cannot be found on openstreetmap.org, please try other bounding box.')
+        
         return urls
 
 

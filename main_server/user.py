@@ -5,19 +5,24 @@ from connectDB import database
 from manage_cache import search_xml_in_cache, save_xml_to_cache
 from common import check_keys
 import json,logging,requests,xml.etree.ElementTree,hashlib,Queue,threading,os
+import web
 class user:
-    def __init__(self,token,map_engine,search_time=0,image_xml=[]):
+    def __init__(self,token,map_engine):
         self.token=token
         self.map_engine=map_engine
         self.change_map_engine(map_engine)
-        self.image_xml=image_xml #list to put results of image anaylsis
-        self.search_time=search_time
+        self.image_xml=[] #list to put results of image anaylsis
         self.annotation_path=os.path.join(conf.CACHE,conf.ANNOTATION)
         #self.functions={'change_map_engine':self.change_map_engine,'search_by_name':self.search_by_name,'search_bounding_box':self.search_bounding_box,'search_coordinate':self.search_coordinate,'image_analysis':self.image_analysis}
         self.db=database.getInstance()
+        self.session=web.config._session
 
-
-    def change_map_engine(self,map_engine):
+    def change_map_engine(self,data):
+        temp=check_keys(data,['map_engine'])
+        if temp!=None:
+            return temp+' not found'
+        map_engine=data['map_engine']
+        self.session.map_engine=map_engine
         if map_engine==conf.GOOGLE:
             self.map_engine=google_map.getInstance() #map_engine to use
         elif map_engine==conf.BAIDU:
@@ -28,8 +33,8 @@ class user:
 
         for image in image_infos:
             logging.info("save "+self.token+" : "+image['url']+" to database" )
-            self.db.save_image_url(self.token,self.search_time,image['long'],image['lat'],image['url'])
-        self.search_time+=1
+            self.db.save_image_url(self.token,self.session.search_time,image['long'],image['lat'],image['url'])
+        self.session.search_time+=1
 
     def search_by_name(self,data):
         """search places by name and center"""
@@ -46,7 +51,7 @@ class user:
         logging.info("prepare to run search_bounding_box")
         image_infos=self.map_engine.search_bounding_box(data)
         self.save_image_urls_to_database(image_infos)
-        return json.dumps(image_infos[0:10])
+        return len(image_infos)
 
     def search_coordinate(self,data):
         """search place of the coordinate"""
@@ -84,7 +89,7 @@ class user:
             return temp+" not found"
         limit=int(data['limit'])
 
-        image_infos=self.db.get_image_infos(self.token,self.search_time-1,limit)
+        image_infos=self.db.get_image_infos(self.token,self.session.search_time-1,limit)
         logging.info('generate md5 according to image url')
         images=[]
         md5_to_place={}
@@ -111,5 +116,5 @@ class user:
             longtitude,latitude=md5_to_place[md5]
             results.append({'long':longtitude,'lat':latitude,'url':url,'xml':xml})
         print results
-        self.db.remove_image_infos(self.token,self.search_time-1,image_infos)
+        self.db.remove_image_infos(self.token,self.session.search_time-1,image_infos)
         return json.dumps(results)

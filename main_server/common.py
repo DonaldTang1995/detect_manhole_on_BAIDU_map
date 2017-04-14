@@ -36,6 +36,22 @@ def check_float(value,min_value,max_value):
     except ValueError:
         return None
        
+def decode_xml(object_name,xml):
+    bounding_box=[]
+    #print xml
+    import xml.etree.ElementTree as ET
+    root=ET.fromstring(xml)
+    for obj in root.findall('object'):
+        if(obj.find('name').text==object_name):
+            score=float(obj.find("score").text)
+            bnd_box=obj.find('bndbox')
+            xmin=int((bnd_box).find('xmin').text)
+            ymin=int((bnd_box).find('ymin').text)
+            xmax=int((bnd_box).find('xmax').text)
+            ymax=int((bnd_box).find('ymax').text)
+            bounding_box.append((xmin,ymin,xmax,ymax,score))
+    return bounding_box
+
 def coordinate_from_google_to_baidu(longitude,latitude):
     gcj02lon,gcj02lat= wgs84togcj02(longitude,latitude)
     return gcj02tobd09(gcj02lon,gcj02lat)

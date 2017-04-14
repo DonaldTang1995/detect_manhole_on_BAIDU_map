@@ -3,30 +3,34 @@ from google_map_engine import google_map
 from baidu_map_engine import baidu_map
 from connectDB import database
 from manage_cache import search_xml_in_cache, save_xml_to_cache
-from common import check_keys
+from common import check_keys,decode_xml
 import json,logging,requests,xml.etree.ElementTree,hashlib,Queue,threading,os
 import web
 class user:
     def __init__(self,token,map_engine):
         self.token=token
-        self.map_engine=map_engine
-        self.change_map_engine(map_engine)
         self.image_xml=[] #list to put results of image anaylsis
         self.annotation_path=os.path.join(conf.CACHE,conf.ANNOTATION)
         #self.functions={'change_map_engine':self.change_map_engine,'search_by_name':self.search_by_name,'search_bounding_box':self.search_bounding_box,'search_coordinate':self.search_coordinate,'image_analysis':self.image_analysis}
         self.db=database.getInstance()
         self.session=web.config._session
+        self.temp=None
+        if map_engine==conf.GOOGLE:
+            self.map_engine=google_map.getInstance()
+        elif map_engine==conf.BAIDU:
+            self.map_engine=baidu_map.getInstance()
 
     def change_map_engine(self,data):
         temp=check_keys(data,['map_engine'])
         if temp!=None:
             return temp+' not found'
-        map_engine=data['map_engine']
+        map_engine=int(data['map_engine'])
         self.session.map_engine=map_engine
         if map_engine==conf.GOOGLE:
             self.map_engine=google_map.getInstance() #map_engine to use
         elif map_engine==conf.BAIDU:
             self.map_engine=baidu_map.getInstance()
+        return json.dumps("Successfully change the map engine")
 
     def save_image_urls_to_database(self,image_infos):
         logging.info("begin putting image urls to database")
@@ -42,9 +46,8 @@ class user:
 
         results,image_infos=self.map_engine.search_by_name(data)
         self.save_image_urls_to_database(image_infos)
-        if len(image_infos)!=0:
-            results=json.dumps((results),len(image_infos))
-        return results
+       
+        return json.dumps(results)
 
     def search_bounding_box(self,data):
         """search places in a boudning box """
@@ -67,27 +70,35 @@ class user:
         """send image url and its md5 to address to run image ananlysis"""
         self.image_xml=search_xml_in_cache(images)
 
-        for md5,url,_ in self.image_xml:
-            images.remove((md5,url))
+        md5s=[]
+        for md5,url in images:
+            if self.db.get_image_seaerched(md5):
+                images.remove((md5,url))
+            else:
+                md5s.append(md5)
+        self.db.store_image_searched(md5s)
+
         for md5,url in images:
             logging.info('send '+url+' to '+address)
         if len(images)>0:
-            response=requests.post(address,data=json.dumps(images),timeout=0.1)
+            response=requests.post(address,data=json.dumps(images))
             logging.info('receive results from '+address)
         
             for msg in json.loads(response.text):
                 md5,url,xml=msg[0],msg[1],msg[2]
-                self.image_xml.append((url,xml))
+                self.image_xml.append((md5,url,xml))
                 save_xml_to_cache(md5,xml)
+                
 
     def image_analysis(self,data):
         """take image url from database and run image analysis"""
         logging.info('run image analysis')
 
-        temp=check_keys(data,['limit'])
+        temp=check_keys(data,['limit','object'])
         if temp!=None:
             return temp+" not found"
         limit=int(data['limit'])
+        object_name=data['object']
 
         image_infos=self.db.get_image_infos(self.token,self.session.search_time-1,limit)
         logging.info('generate md5 according to image url')
@@ -114,7 +125,7 @@ class user:
         results=[]
         for md5,url,xml in self.image_xml:
             longtitude,latitude=md5_to_place[md5]
-            results.append({'long':longtitude,'lat':latitude,'url':url,'xml':xml})
-        print results
-        self.db.remove_image_infos(self.token,self.session.search_time-1,image_infos)
+            decoded_xml=decode_xml(object_name,xml)
+            if len(decoded_xml)!=0:
+                results.append({'long':longtitude,'lat':latitude,'url':url,'bounding_box':decoded_xml})
         return json.dumps(results)

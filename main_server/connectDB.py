@@ -14,8 +14,6 @@ class database():
         return database.instance
     
     def connect(self):
-        if self.conn!=None:
-            return
         try:
             self.conn= MySQLdb.connect(
                         host=conf.HOST,
@@ -26,7 +24,6 @@ class database():
                         )
             self.curs=self.conn.cursor()
         except MySQLdb.Error as err:
-            print err
             logging.error('{}'.format(err))
     
     def create_account(self,username,password_md5):
@@ -78,12 +75,14 @@ class database():
     def get_image_infos(self,token,time,limit):
         self.connect()
         sql='SELECT longitude,latitude,url FROM image_info WHERE token="{}" and time={} LIMIT {}'.format(token,time,limit)
+        sql1='DELETE FROM image_info where token="{}" and time = {} and longitude = {} and latitude = {} and url ="{}"'
         results=[]
         try:
             self.curs.execute(sql)
             res=self.curs.fetchall()
             for row in res:
-                results.append({'long':float(row[0]),'lat':float(row[1]),'urk':row[2]})
+                results.append({'long':float(row[0]),'lat':float(row[1]),'url':row[2]})
+                self.curs.execute(sql1.format(token,time,row[0],row[1],row[2]))
         except MySQLdb.Error, e:
             try:
                 logging.error("Mysql error [{}]:{}".format(e.args[0],e.args[1]))
@@ -92,18 +91,50 @@ class database():
 
         return results
          
-        return [{'long':121.55798,'lat':29.877452,'url':'http://pic.58pic.com/58pic/13/30/91/06u58PICHDR_1024.jpg'},
-   {'long':121.55798,'lat':29.877452,'url': 'http://n1.itc.cn/img8/wb/recom/2016/08/03/147021514873965284.JPEG'}]
 
     def remove_image_infos(self,token,time,image_infos):
         sql='DELETE FROM image_info where token="{}" and time = "{}" and longitude = "{}" and latitude = "{}" and url ="{}"'
+
         try:
             for image_info in image_infos:
-                latitude,longitude,url=image_info.items()
+                latitude=image_info['lat']
+                longitude=image_info['long']
+                url=image_info['url']
                 self.curs.execute(sql.format(token,time,longitude,latitude,url))
         except MySQLdb.Error,e:
             try:
                 logging.error("Mysql error [{}]:{}".format(e.args[0],e.args[1]))
             except IndexError:
                 logging.error("Mysql error {}".format(str(e)))
+
+    def store_image_searched(self,image_md5s):
+        self.connect()
+        sql='INSERT INTO images VALUES("{}");'
+        results=[]
+        try:
+            for image_md5 in image_md5s:
+                self.curs.execute(sql.format(image_md5))
+        except MySQLdb.Error, e:
+            try:
+                logging.error("Mysql error [{}]:{}".format(e.args[0],e.args[1]))
+            except IndexError:
+                logging.error("Mysql error {}".format(str(e)))
+
+        return results
+    
+    def get_image_seaerched(self,image_md5):
+        self.connect()
+        sql='SELECT * FROM images WHERE image_md5="{}";'
+        try:
+            self.curs.execute(sql.format(image_md5))
+            res=self.curs.fetchall()
+            if len(res)!=0:
+                return True
+        except MySQLdb.Error, e:
+            try:
+                logging.error("Mysql error [{}]:{}".format(e.args[0],e.args[1]))
+            except IndexError:
+                logging.error("Mysql error {}".format(str(e)))
+
+        return False
 

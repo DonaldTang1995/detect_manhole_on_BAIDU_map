@@ -7,10 +7,11 @@ from ucs_server import UCS
 from index import index
 from baidu import baidu
 from config import conf
+from get_image import Image
 urls = (
     '/UCS', 'UCS',
     '/index','index',
-    '/baidu','baidu',
+    '/image/(.*)','Image',
 
 )
 if __name__ == "__main__": 

@@ -58,7 +58,7 @@ class baidu_map(map):
             places=places+[{"name":name,"longitude":longitude,"latitude":latitude,"information":info}]
             urls=urls+self.generate_image_urls(longitude,latitude)
 
-        return ({placename:places},urls)
+        return (places,urls)
 
 
     # data contains {"max_long":"...","min_long":"...","max_lat":"...","min_lat":"..."}

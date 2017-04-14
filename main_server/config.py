@@ -21,7 +21,7 @@ __C.ANNOTATION='annotation'
 __C.NUMBER_OF_IMAGE_ANALYSIS_SERVER=1
 
 #image analysis server address
-__C.ADDRESSES=['http://tangshitao.51vip.biz:54123/detect/']
+__C.ADDRESSES=['http://tangshitao.51vip.biz:54231/detect/']
 
 #baidu map key
 __C.BAIDU_KEY=['CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb']

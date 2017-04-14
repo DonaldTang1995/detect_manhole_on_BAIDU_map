@@ -60,4 +60,5 @@ def generate_image_xml(image_name,size,bounding_box):
     doc.appendChild(annotation)
 
     logging.info("finish generating xml file")
+    print type(doc)
     return doc.toprettyxml(indent=' ')

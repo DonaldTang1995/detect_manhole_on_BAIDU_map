@@ -26,6 +26,9 @@ def detectImageByName(net,img_name,gpu_id=0):
 
     logging.info("begin analyzing "+img_name)
     img=cv2.imread(image_path)
+    if img==None:
+        logging.info(img_name+" is not an image")
+        return None
     scores,boxes=im_detect(net,img)
     logging.info("finish analyzing "+img_name)
 
@@ -44,6 +47,8 @@ def detectImageByName(net,img_name,gpu_id=0):
         logging.info("finish applying nms to class "+cls+" in "+img_name)
         dets = dets[keep, :]
         bounding_box[cls]=dets[dets[:,-1]>SOFTMAX_THRESH]
-
-    return generate_image_xml(img_name,img.shape,bounding_box)
+    if len(bounding_box)==0:
+        return None
+    else:
+        return generate_image_xml(img_name,img.shape,bounding_box)
 

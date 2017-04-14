@@ -31,6 +31,7 @@ class detect:
             saved_path=os.path.join(conf.IMAGES_DIR,saved_name)
             logging.info("downloading "+image_url+" ...")
             urllib.urlretrieve (image_url, saved_path)
+            print image_url
             logging.info("finish downloading "+image_url)
             self.waiting_for_analysis.put((saved_name,image_url))
 
@@ -91,10 +92,11 @@ class detect:
             self.number_of_threads_downloading_images_semaphore.acquire()
 
 
-        result=[]
+        results=[]
         while self.successfully_detected.qsize()!=0:
-            result.append(self.successfully_detected.get())
+            result=self.successfully_detected.get()
+            if result[2]!=None:
+                results.append(result)
 
         threading.Thread(target=self.delete_images).start()
-        
-        return json.dumps(result)
+        return json.dumps(results)

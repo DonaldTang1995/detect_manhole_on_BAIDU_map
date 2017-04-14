@@ -9,12 +9,13 @@ def search_xml_in_cache(images):
         if os.path.isfile(xml_path):
             logging.info('found '+md5+' in cache')
             with open(xml_path,'r') as f:
-                image_xml.append((md5,url,f.readlines()))
+                image_xml.append((md5,url,f.read()))
+                
         else:
             logging.info(md5+' not found in cache')
 
-    for md5,url,xml in image_xml:
-        images.remove((md5,url))
+    #for md5,url,xml in image_xml:
+    #    images.remove((md5,url))
 
     return image_xml
 

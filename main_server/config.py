@@ -21,4 +21,18 @@ __C.ANNOTATION='annotation'
 __C.NUMBER_OF_IMAGE_ANALYSIS_SERVER=1
 
 #image analysis server address
-__C.ADDRESSES=['http://tangshitao.51vip.biz:54123/detect/']
+__C.ADDRESSES=['http://tangshitao.51vip.biz:54231/detect/']
+
+#baidu map key
+__C.BAIDU_KEY=['CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb']
+
+#google map key
+__C.GOOGLE_KEY=['AIzaSyAoaOH-XDMVKlm8KJoCXDLR8Twkz0rVkcY']
+
+#database information
+__C.HOST='localhost'
+__C.PORT=3306
+__C.USERNAME='zyGroup'
+__C.PASSWORD='zyGroup'
+__C.DATABASE='db_zyGroup'
+

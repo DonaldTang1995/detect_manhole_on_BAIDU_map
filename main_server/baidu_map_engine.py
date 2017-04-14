@@ -1,10 +1,14 @@
 from map_engine import map
-from common import check_keys
+from config import conf
+from common import check_keys,check_float,coordinate_from_google_to_baidu,coordinate_from_baidu_to_google
 import json, requests, urllib2, httplib,logging
 
 
 class baidu_map(map):
     instance=None
+    def __init__(self):
+        self.key_number=0
+        self.key=conf.BAIDU_KEY[0]
     
     @staticmethod
     def getInstance():
@@ -12,22 +16,33 @@ class baidu_map(map):
             baidu_map.instance=baidu_map()
         return baidu_map.instance
 
+    def get_key():
+        self.key_number=(self.key_number+1)%len(conf.BAIDU_KEY)
+        self.key=conf.BAIDU_KEY[self.key_number]
+    
+    def generate_image_urls(self,longitude,latitude):
+        urls=[]
+        for i in [0,90,180,270]:
+            url="http://api.map.baidu.com/panorama/v2?ak=%s&width=1000&height=512&location=%f,%f&fov=120&pitch=40&heading=%d"%(self.key,longitude,latitude,i)
+            urls.append({'long':longitude,'lat':latitude,'url':url})
+        return urls
+
     # data contains {"name":"...","max_long":"...","min_long":"...","max_lat":"...","min_lat":"..."}
     def search_by_name(self,data): 
         temp=check_keys(data,['placename','max_long','min_long','max_lat','min_lat'])
         if temp!=None:
-            return ({temp+ " not found"},[])
+            return (temp+ " not found",[])
        
         logging.info('begin running search_by_name')    
         placename=data['placename']
-        max_long=data["max_long"]
-        min_long=data["min_long"]
-        max_lat=data["max_lat"]
-        min_lat=data["min_lat"]
+        values=[check_float(data[i],-180,180) for i in ['max_long','min_long','max_lat','min_lat']]
+        for v in values:
+            if v==None:
+                return ("invalid value",[])
+        max_long,min_long,max_lat,min_lat=values    
         
         #url = "http://api.map.baidu.com/geocoder/v2/"+'?'+"&address="+name+"&output=json&pois=0"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"       
-        url = "http://api.map.baidu.com/place/v2/search?"+"query="+placename+"&bounds="+min_long+","+min_lat+","+max_long+","+max_lat+"&output=json&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-        print(url)
+        url = "http://api.map.baidu.com/place/v2/search?query=%s&bounds=%f,%f,%f,%f&output=json&ak=%s"%(placename,min_lat,min_long,max_lat,max_long,self.key)
         temp = urllib2.urlopen(url)
         hjson = json.loads(temp.read())
         places=[]
@@ -39,14 +54,11 @@ class baidu_map(map):
             latitude = hjson["results"][i]["location"]["lat"]
             info = hjson["results"][i]["detail"]
 
-            url1 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+str(longitude)+","+str(latitude)+"&width=1000&height=512&fov=120&pitch=40"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-            url2 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+str(longitude)+","+str(latitude)+"&width=1000&height=512&fov=120&pitch=40"+"&heading=90"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-            url3 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+str(longitude)+","+str(latitude)+"&width=1000&height=512&fov=120&pitch=40"+"&heading=180"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-            url4 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+str(longitude)+","+str(latitude)+"&width=1000&height=512&fov=120&pitch=40"+"&heading=270"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
             
             places=places+[{"name":name,"longitude":longitude,"latitude":latitude,"information":info}]
-            urls=urls+[url1,url2,url3,url4]
-        return ({placename:places},urls)
+            urls=urls+self.generate_image_urls(longitude,latitude)
+
+        return (places,urls)
 
 
     # data contains {"max_long":"...","min_long":"...","max_lat":"...","min_lat":"..."}
@@ -54,38 +66,36 @@ class baidu_map(map):
         temp=check_keys(data,['max_long','min_long','max_lat','min_lat'])
         if temp!=None:
             return ({temp+ " not found"},[])
-       
         logging.info('begin running search_bounding_box')  
-        max_long=data["max_long"]
-        min_long=data["min_long"]
-        max_lat=data["max_lat"]
-        min_lat=data["min_lat"]
-        url="http://www.openstreetmap.org/api/0.6/map?bbox="+min_long+"%2C"+min_lat+"%2C"+max_long+"%2C"+max_lat
+        values=[check_float(data[i],-180,180) for i in ['max_long','min_long','max_lat','min_lat']]
+        for v in values:
+            if v==None:
+                return ("invalid value",[])
+        max_long_baidu,min_long_baidu,max_lat_baidu,min_lat_baidu=values
+        max_long,max_lat=coordinate_from_baidu_to_google(max_long_baidu,max_lat_baidu)
+        min_long,min_lat=coordinate_from_baidu_to_google(min_long_baidu,min_lat_baidu)    
+        
+        url="http://www.openstreetmap.org/api/0.6/map?bbox={},{},{},{}".format(min_long,min_lat,max_long,max_lat)
         #print(url)
         urls=[]
         places=[]        
-
         try:
             temp = urllib2.urlopen(url)
             dom=temp.read()
             i=0
-            while i+1:
-                i=dom.find("lat=",i)
-                latitude=dom[i+5:i+13]
-                i=dom.find("lon=",i)
-                longitude=dom[i+5:i+13]
-
-                if "l" not in latitude:
-                    url1 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+longitude+","+latitude+"&width=1000&height=512&fov=120&pitch=40"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-                    url2 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+longitude+","+latitude+"&width=1000&height=512&fov=120&pitch=40"+"&heading=90"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-                    url3 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+longitude+","+latitude+"&width=1000&height=512&fov=120&pitch=40"+"&heading=180"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-                    url4 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+longitude+","+latitude+"&width=1000&height=512&fov=120&pitch=40"+"&heading=270"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-                    
-                    places=places+[{"longitude":longitude,"latitude":latitude}]
-                    urls=urls+[url1,url2,url3,url4]            
+            import re
+            pattern1=re.compile('lat="[0-9]+.[0-9]+" lon="[0-9]+.[0-9]+"')
+            pattern2=re.compile('[0-9]+.[0-9]+')
+            
+            for string in pattern1.findall(dom):
+                latitude,longitude=[float(i) for i in pattern2.findall(string)] 
+                longitude,latitude=coordinate_from_google_to_baidu(longitude,latitude)
+                if longitude>=min_long_baidu and longitude<=max_long_baidu and latitude>=min_lat_baidu and latitude <=max_lat_baidu:
+                    urls=urls+self.generate_image_urls(longitude,latitude)            
         except urllib2.HTTPError,e:
             logging.info('This bounding box cannot be found on openstreetmap.org, please try other bounding box.')
-        return ({"search_bounding_box":places},urls)
+        
+        return urls
 
 
     # data contains {"longtitude":"...","latitude":"..."}
@@ -94,25 +104,23 @@ class baidu_map(map):
         temp=check_keys(data,['longitude', 'latitude'])
         if temp!=None:
             return ({temp+ " not found"},[])
+        values=[check_float(data[i],-180,180) for i in ['longitude','latitude']]
+        for v in values:
+            if v==None:
+                return ("invalid value",[])
+        longitude,latitude=values
 
         logging.info('begin running search_coordinate')
-        longitude=data['longitude']
-        latitude=data['latitude']
         
-        url = "http://api.map.baidu.com/geocoder/v2/"+'?'+"&location="+longitude+","+latitude+"&output=json&pois=1"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-        print url
+        url = "http://api.map.baidu.com/geocoder/v2/?&location=%f,%f&output=json&pois=1&ak=%s"%(longitude,latitude,self.key)
         temp = urllib2.urlopen(url)
         hjson = json.loads(temp.read())
         address = hjson["result"]["formatted_address"]
         info = hjson["result"]["sematic_description"]
 
-        url1 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+longitude+","+latitude+"&width=1000&height=512&fov=120&pitch=40"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-        url2 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+longitude+","+latitude+"&width=1000&height=512&fov=120&pitch=40"+"&heading=90"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-        url3 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+longitude+","+latitude+"&width=1000&height=512&fov=120&pitch=40"+"&heading=180"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
-        url4 = "http://api.map.baidu.com/panorama/v2"+ '?'+"&location="+longitude+","+latitude+"&width=1000&height=512&fov=120&pitch=40"+"&heading=270"+"&ak=CkMdH2rDm1ypzW7ODG7hU6rGAXRr4nYb"
 
         return ({address:{"longitude":longitude,"latitude":latitude,"information":info}},
-                [url1,url2,url3,url4])
+                self.generate_image_urls(longitude,latitude))
 
 
 

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link type="text/css" rel="stylesheet" href="styleSheet.css" />
+</head>
+
+<body>
+    <div id="Login" class="Login">
+        <h2>Login</h2>
+
+
+        <div id="block">
+            <input type="text" name="name" id="user_name" placeholder="Username" required />
+            <input type="password" name="user_password" id="user_password" placeholder="Password" required />
+            <input type="button" id="user_submit" name="submit" value="GO" />
+        </div>
+
+    </div>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="main.js"></script>
+    <script language="javascript">
+        jQuery(document).ready(function () {
+
+            jQuery("#user_submit").click(function () {
+                var user_name = jQuery("#user_name").val();
+                var user_password = jQuery("#user_password").val();
+                //alert(user_name);
+                //alert(user_password);
+                
+                jQuery.ajax({
+
+                    type: "POST",
+                    url: server_url,
+                    data: JSON.stringify({
+                        "command": "login",
+                        'username': user_name,
+                        'password': user_password
+                    }),
+                    success: function (data) {
+                        setCookie('token',data,1)
+                        //alert("Log in successfully");                        
+                        window.location.replace('index.html');
+                        
+                    },
+                    error: function (x) {
+                        alert("Wrong user name and password");
+                    },
+                    dataType: 'json'
+
+                });
+            })
+        })
+    </script>
+</body>
+
+</html>
